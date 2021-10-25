@@ -12,6 +12,7 @@ public class SpendingPlan {
     private User user;
 
 
+
     public SpendingPlan() {
     }
 
