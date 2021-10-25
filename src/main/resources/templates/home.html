@@ -7,7 +7,6 @@
 <body>
 <div th:switch="${LoggedInUser}">
     <h2 th:case="null">Not logged in</h2>
-    <h2 th:case="*">Logged in as </h2>
 </div>
 <p><a href="/createUser">Create a new user</a></p>
 <p><a href="/login">Log in to your account</a></p>

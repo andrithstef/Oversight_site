@@ -61,4 +61,10 @@ public class UserController {
         }
         return "home";
     }
+
+    //public String logout(Model model, HttpSession session)
+
+    //public String deleteUser(User user)
+
+    //public String changePassword(User user, String password)
 }
