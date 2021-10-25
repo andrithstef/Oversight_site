@@ -9,6 +9,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 public class UserController {
     private UserService userService;
@@ -33,12 +35,30 @@ public class UserController {
     @RequestMapping(value = "/createUser", method = RequestMethod.POST)
     public String createuserPOST(User user, BindingResult result, Model model){
         if (result.hasErrors()){
-            return "redirect:/createUser";
+            return "createUser";
         }
         User exists = userService.findByUsername(user.getUsername());
-        if (exists == null){
-            userService.save(exists);
+        if (exists == null) {
+            userService.save(user);
         }
-        return "redirect:/";
+        return "redirect:/seeTransactions";
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String loginUserGET(User user){
+        return "login";
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public String loginUserPOST(User user, BindingResult result, Model model, HttpSession session){
+        if (result.hasErrors()){
+            return "home";
+        }
+        User exists = userService.findByUsername(user.getUsername());
+        if (exists != null){
+            session.setAttribute("LoggedInUser", exists);
+            model.addAttribute("LoggedInUser", exists);
+        }
+        return "home";
     }
 }

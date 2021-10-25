@@ -7,12 +7,12 @@
 <body>
 create user page
 <form action="#" th:action="@{/createUser}" th:object="${user}" method="post">
-    <label for="amount">Amount</label>
-    <input type="text" th:field="*{amount}" id="amount" placeholder="Amount">
-    <span th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}"></span>
-    <label for="category">Category</label>
-    <input type="text" th:field="*{category}" id="category" placeholder="Category">
-    <span th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></span>
+    <label for="username">Username</label>
+    <input type="text" th:field="*{username}" id="username" placeholder="Username">
+    <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
+    <label for="password">Password</label>
+    <input type="text" th:field="*{password}" id="password" placeholder="Password">
+    <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
     <input type="submit" value="Create user">
 </form>
 
