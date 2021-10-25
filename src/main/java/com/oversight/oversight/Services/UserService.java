@@ -10,4 +10,5 @@ public interface UserService {
     List<User> findAll();
     User findByUsername(String username);
     User login(User user);
+    void changePassword(User user, String password);
 }

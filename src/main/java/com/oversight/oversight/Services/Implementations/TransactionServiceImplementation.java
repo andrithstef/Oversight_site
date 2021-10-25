@@ -1,6 +1,7 @@
 package com.oversight.oversight.Services.Implementations;
 
 import com.oversight.oversight.Persistence.Entities.Transaction;
+import com.oversight.oversight.Persistence.Entities.User;
 import com.oversight.oversight.Persistence.Repositories.TransactionRepository;
 import com.oversight.oversight.Services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,5 +37,10 @@ public class TransactionServiceImplementation implements TransactionService {
     @Override
     public void delete(Transaction transaction) {
         transactionRepository.delete(transaction);
+    }
+
+    @Override
+    public List<Transaction> findAllByUser(User user) {
+        return transactionRepository.findAllByUser(user);
     }
 }
