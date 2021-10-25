@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="https://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Add a new Transaction</title>
+</head>
+<body>
+
+<form action="#" th:action="@{/addTransaction}" th:object="${transaction}" method="post">
+  <label for="amount">Amount</label>
+  <input type="text" th:field="*{amount}" id="amount" placeholder="Amount">
+  <span th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}"></span>
+  <label for="category">Category</label>
+  <input type="text" th:field="*{category}" id="category" placeholder="Category">
+  <span th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></span>
+  <input type="submit" value="Add Transaction">
+</form>
+
+</body>
+</html>

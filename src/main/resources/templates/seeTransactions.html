@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Transaction system</title>
+</head>
+<body>
+
+<div th:switch="${transactions}">
+    <h2 th:case="null">No Transactions yet!</h2>
+    <div th:case="*">
+        <h2>Transactions</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>amount</th>
+                <th>Category</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="transaction : ${transactions}">
+                <td th:text="${transaction.amount}"></td>
+                <td th:text="${transaction.category}"></td>
+                <td><a th:href="@{/delete/{id}(id=${transaction.ID})}">Delete</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <p><a href="/addTransaction">Add a new transaction</a></p>
+    <p><a href="/">Back to homepage</a></p>
+</div>
+
+</body>
+</html>
