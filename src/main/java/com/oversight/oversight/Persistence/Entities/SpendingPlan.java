@@ -8,9 +8,9 @@ public class SpendingPlan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long ID;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private User user;
-    private String[] categories;
+
 
     public SpendingPlan() {
     }
