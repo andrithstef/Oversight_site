@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
+import java.security.MessageDigest;
 
 @Controller
 public class UserController {
@@ -39,14 +40,20 @@ public class UserController {
         if (result.hasErrors()){
             return "createUser";
         }
+        //Hash the password and replace the unhashed one
+        String hashedPassword = userService.get_SHA_512(user.getPassword());
+        user.setPassword(hashedPassword);
         User exists = userService.findByUsername(user.getUsername());
+
         if (exists == null) {
+            //the user does not exist
             //save user and log in
             exists = userService.save(user);
             session.setAttribute("LoggedInUser", exists);
             model.addAttribute("LoggedInUser", exists);
             return "loggedIn";
         }
+        //Try again
         return "createUser";
     }
 
@@ -60,8 +67,13 @@ public class UserController {
         if (result.hasErrors()){
             return "loggedIn";
         }
+        //Hash the inserted password to make sure it's correct
+        String hashedPassword = userService.get_SHA_512(user.getPassword());
         User exists = userService.findByUsername(user.getUsername());
-        if (exists != null && exists.getPassword().equals(user.getPassword())){
+
+        //The user exists and the password is correct
+        //log in and move to user page
+        if (exists != null && hashedPassword.equals(exists.getPassword())){
             session.setAttribute("LoggedInUser", exists);
             model.addAttribute("LoggedInUser", exists);
             return "loggedIn";
@@ -83,14 +95,21 @@ public class UserController {
 
     @RequestMapping(value = "/deleteUser", method = RequestMethod.POST)
     public String deleteUserPOST(User tempUser, HttpSession session){
+        //Get logged in user
         User loggedIn = (User) session.getAttribute("LoggedInUser");
         loggedIn = userService.findByID(loggedIn.getID());
+
+        //Hash the inserted password to check against the real password
         String pass = tempUser.getPassword();
-        if (loggedIn.getPassword().equals(pass)){
+        String hashedPassword = userService.get_SHA_512(pass);
+
+        if (loggedIn.getPassword().equals(hashedPassword)){
+            //The password is correct
             session.setAttribute("LoggedInUser", null);
             userService.delete(loggedIn);
             return "home";
         }
+        //Try again
         return "/deleteUser";
     }
 
