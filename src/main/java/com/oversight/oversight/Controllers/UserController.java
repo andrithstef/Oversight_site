@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
-import java.security.MessageDigest;
 
 @Controller
 public class UserController {
@@ -54,7 +53,7 @@ public class UserController {
             return "loggedIn";
         }
         //Try again
-        return "createUser";
+        return "home";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -113,5 +112,32 @@ public class UserController {
         return "/deleteUser";
     }
 
-    //public String changePassword(User user, String password)
+    @RequestMapping(value = "/changePassword", method = RequestMethod.GET)
+    public String changePasswordGET(User user){
+        return "changePassword";
+    }
+
+    //TODO: klára þetta
+    @RequestMapping(value = "/changePassword", method = RequestMethod.POST)
+    public String changePasswordPOST(HttpSession session, Model model,
+                                     @RequestParam String oldPassword,
+                                     @RequestParam String newPassword){
+        //get logged in user
+        User loggedIn = (User)session.getAttribute("LoggedInUser");
+
+        //Hash old password and check if it's correct
+        oldPassword = userService.get_SHA_512(oldPassword);
+
+        if(!loggedIn.getPassword().equals(oldPassword)){
+            //the old password is incorrect, redirect to homepage
+            return "/seeTransactions";
+        }
+        //The password is correct, change to new one
+        newPassword = userService.get_SHA_512(newPassword);
+        loggedIn.setPassword(newPassword);
+        loggedIn = userService.save(loggedIn);
+        //Update the logged in user in the session
+        session.setAttribute("LoggedInUser", loggedIn);
+        return "/seeTransactions";
+    }
 }
