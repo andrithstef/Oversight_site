@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create a Spending Plan</title>
+</head>
+<body>
+create spending plan page
+<form action="#" th:action="@{/createSpendingPlan}" th:object="${spendingplan}" method="post">
+    <label for="food">Food</label>
+    <input type="text" th:field="*{food}" id="food" placeholder="Food">
+    <span th:if="${#fields.hasErrors('food')}" th:errors="*{food}"></span>
+    <label for="car">Car</label>
+    <input type="text" th:field="*{car}" id="car" placeholder="Car">
+    <span th:if="${#fields.hasErrors('car')}" th:errors="*{car}"></span>
+    <label for="booze">Booze</label>
+    <input type="text" th:field="*{booze}" id="booze" placeholder="Booze">
+    <span th:if="${#fields.hasErrors('booze')}" th:errors="*{booze}"></span>
+    <label for="electronics">Electronics</label>
+    <input type="text" th:field="*{electronics}" id="electronics" placeholder="Electronics">
+    <span th:if="${#fields.hasErrors('electronics')}" th:errors="*{electronics}"></span>
+    <input type="submit" value="Create Spending Plan">
+</form>
+
+<p><a href="/">Cancel</a></p>
+</body>
+</html>

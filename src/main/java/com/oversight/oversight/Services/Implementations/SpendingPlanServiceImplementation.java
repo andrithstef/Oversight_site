@@ -1,6 +1,7 @@
 package com.oversight.oversight.Services.Implementations;
 
 import com.oversight.oversight.Persistence.Entities.SpendingPlan;
+import com.oversight.oversight.Persistence.Entities.User;
 import com.oversight.oversight.Persistence.Repositories.SpendingPlanRepository;
 import com.oversight.oversight.Services.SpendingPlanService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,17 +22,27 @@ public class SpendingPlanServiceImplementation implements SpendingPlanService {
     public SpendingPlan save(SpendingPlan spendingPlan) {
         return spendingPlanRepository.save(spendingPlan);
     }
+
+    @Override
+    public void delete(SpendingPlan spendingPlan) {
+        spendingPlanRepository.delete(spendingPlan);
+    }
+
+    @Override
+    public List<SpendingPlan> findAll() {
+        return spendingPlanRepository.findAll();
+    }
+
+    @Override
+    public SpendingPlan findByID(long id) {
+        return spendingPlanRepository.findByID(id);
+    }
+
+    @Override
+    public SpendingPlan findByUser(User user) {
+        return spendingPlanRepository.findByUser(user);
+    }
     /*
-    @Override
-    public SpendingPlan reset(SpendingPlan spendingPlan) {
-        return null;
-    }
-
-    @Override
-    public List<Float> getAllCategories() {
-        return null;
-    }
-
     @Override
     public void changeCategory(String category, float fraction) {
 

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My Spending Plan</title>
+</head>
+<body>
+
+<div th:switch="${seespendingplan}">
+    <h2 th:case="null">No Spending Plan yet!</h2>
+    <div th:case="*">
+        <h2>Spending Plan</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Food</th>
+                <th>Car</th>
+                <th>Booze</th>
+                <th>Electronics</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="spendingplan : ${seespendingplan}">
+                <td th:text="${spendingplan.food}"></td>
+                <td th:text="${spendingplan.car}"></td>
+                <td th:text="${spendingplan.booze}"></td>
+                <td th:text="${spendingplan.electronics}"></td>
+                <td><a th:href="@{/deletespendingplan/{id}(id=${spendingplan.ID})}">Delete</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <p><a href="/">Back to homepage</a></p>
+</div>
+
+</body>
+</html>
