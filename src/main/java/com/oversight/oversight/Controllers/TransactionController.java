@@ -53,9 +53,11 @@ public class TransactionController {
     }
 
     @RequestMapping(value="/delete/{id}", method = RequestMethod.GET)
-    public String deleteTransaction(@PathVariable("id") long id, Model model){
+    public String deleteTransaction(@PathVariable("id") long id, Model model, HttpSession session){
         Transaction transactionToDelete = transactionService.findByID(id);
         transactionService.delete(transactionToDelete);
+        User loggedIn = (User) session.getAttribute("LoggedInUser");
+        model.addAttribute("transactions", loggedIn.getTransactions());
         return "redirect:/seeTransactions";
     }
 

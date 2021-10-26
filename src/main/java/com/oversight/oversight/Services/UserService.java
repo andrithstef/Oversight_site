@@ -11,6 +11,6 @@ public interface UserService {
     User findByUsername(String username);
     User findByID(long id);
     User login(User user);
-    void changePassword(User user, String password);
+    User changePassword(User user, String password);
     String get_SHA_512(String passwordToHash);
 }

@@ -135,9 +135,10 @@ public class UserController {
         //The password is correct, change to new one
         newPassword = userService.get_SHA_512(newPassword);
         loggedIn.setPassword(newPassword);
-        loggedIn = userService.save(loggedIn);
+        loggedIn = userService.changePassword(loggedIn, newPassword);
         //Update the logged in user in the session
         session.setAttribute("LoggedInUser", loggedIn);
+        model.addAttribute("transactions", loggedIn.getTransactions());
         return "/seeTransactions";
     }
 }

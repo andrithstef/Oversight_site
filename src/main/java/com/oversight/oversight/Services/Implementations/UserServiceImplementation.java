@@ -57,14 +57,9 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public void changePassword(User user, String password) {
-        //remove user from database
-        User old = userRepository.getById(user.getID());
-        userRepository.delete(old);
-
-        //set new password and save to database
+    public User changePassword(User user, String password) {
         user.setPassword(password);
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 
     //In: String
