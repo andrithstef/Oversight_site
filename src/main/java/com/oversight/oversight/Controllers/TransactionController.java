@@ -1,6 +1,7 @@
 package com.oversight.oversight.Controllers;
 
 import com.oversight.oversight.Persistence.Entities.Transaction;
+import com.oversight.oversight.Persistence.Entities.User;
 import com.oversight.oversight.Services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -23,11 +25,11 @@ public class TransactionController {
     }
 
     @RequestMapping("/seeTransactions")
-    public String homePage(Model model){
+    public String homePage(Model model, HttpSession session){
 
-        //Get all transactions
-        //TODO: only get transactions of logged in user maybe?
-        List<Transaction> allTransactions = transactionService.findAll();
+        //Get all transactions from logged in user
+        User loggedIn = (User) session.getAttribute("LoggedInUser");
+        List<Transaction> allTransactions = transactionService.findAllByUser(loggedIn);
 
         // Add data to the model
         model.addAttribute("transactions", allTransactions);
@@ -40,10 +42,12 @@ public class TransactionController {
     }
 
     @RequestMapping(value="/addTransaction", method = RequestMethod.POST)
-    public String addTransactionPOST(Transaction transaction, BindingResult result, Model model){
+    public String addTransactionPOST(Transaction transaction, BindingResult result, Model model, HttpSession session){
         if(result.hasErrors()){
             return "newTransaction";
         }
+        User loggedIn = (User) session.getAttribute("LoggedInUser");
+        transaction.setUser(loggedIn);
         transactionService.save(transaction);
         return "redirect:/seeTransactions";
     }

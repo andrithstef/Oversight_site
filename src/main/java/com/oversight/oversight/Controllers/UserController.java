@@ -33,15 +33,19 @@ public class UserController {
     }
 
     @RequestMapping(value = "/createUser", method = RequestMethod.POST)
-    public String createuserPOST(User user, BindingResult result, Model model){
+    public String createuserPOST(User user, BindingResult result, Model model, HttpSession session){
         if (result.hasErrors()){
             return "createUser";
         }
         User exists = userService.findByUsername(user.getUsername());
         if (exists == null) {
-            userService.save(user);
+            //save user and log in
+            exists = userService.save(user);
+            session.setAttribute("LoggedInUser", exists);
+            model.addAttribute("LoggedInUser", exists);
+            return "loggedIn";
         }
-        return "redirect:/seeTransactions";
+        return "createUser";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -52,14 +56,14 @@ public class UserController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String loginUserPOST(User user, BindingResult result, Model model, HttpSession session){
         if (result.hasErrors()){
-            return "home";
+            return "loggedIn";
         }
         User exists = userService.findByUsername(user.getUsername());
         if (exists != null){
             session.setAttribute("LoggedInUser", exists);
             model.addAttribute("LoggedInUser", exists);
         }
-        return "home";
+        return "loggedIn";
     }
 
     //public String logout(Model model, HttpSession session)
