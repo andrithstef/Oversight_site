@@ -99,7 +99,7 @@
     </div>
 
     <div class="input-container ic2">
-        <input type="text" class="input" th:field="*{password}" id="password" placeholder="Password">
+        <input type="password" class="input" th:field="*{password}" id="password" placeholder="Password">
         <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
         <div class="cut"></div>
     </div>

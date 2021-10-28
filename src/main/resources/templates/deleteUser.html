@@ -8,7 +8,7 @@
 Enter your password
 <form action="#" th:action="@{/deleteUser}" th:object="${user}" method="post">
     <label for="password">Password</label>
-    <input type="text" th:field="*{password}" id="password" placeholder="Password">
+    <input type="password" th:field="*{password}" id="password" placeholder="Password">
     <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
     <input type="submit" value="Delete user">
 </form>
