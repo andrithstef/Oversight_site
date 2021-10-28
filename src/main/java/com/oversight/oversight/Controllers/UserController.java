@@ -52,7 +52,7 @@ public class UserController {
             model.addAttribute("LoggedInUser", exists);
             return "loggedIn";
         }
-        //Try again
+        //redirect to homepage
         return "home";
     }
 
@@ -117,7 +117,7 @@ public class UserController {
         return "changePassword";
     }
 
-    //TODO: klára þetta
+
     @RequestMapping(value = "/changePassword", method = RequestMethod.POST)
     public String changePasswordPOST(HttpSession session, Model model,
                                      @RequestParam String oldPassword,

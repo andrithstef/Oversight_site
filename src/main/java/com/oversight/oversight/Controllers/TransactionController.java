@@ -46,6 +46,7 @@ public class TransactionController {
         if(result.hasErrors()){
             return "newTransaction";
         }
+
         User loggedIn = (User) session.getAttribute("LoggedInUser");
         transaction.setUser(loggedIn);
         transactionService.save(transaction);
