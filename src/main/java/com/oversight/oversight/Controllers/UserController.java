@@ -50,6 +50,7 @@ public class UserController {
             exists = userService.save(user);
             session.setAttribute("LoggedInUser", exists);
             model.addAttribute("LoggedInUser", exists);
+            //will probably redirect to a new user/tutorial page
             return "loggedIn";
         }
         //redirect to homepage
@@ -64,7 +65,7 @@ public class UserController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String loginUserPOST(User user, BindingResult result, Model model, HttpSession session){
         if (result.hasErrors()){
-            return "loggedIn";
+            return "login";
         }
         //Hash the inserted password to make sure it's correct
         String hashedPassword = userService.get_SHA_512(user.getPassword());
@@ -75,9 +76,15 @@ public class UserController {
         if (exists != null && hashedPassword.equals(exists.getPassword())){
             session.setAttribute("LoggedInUser", exists);
             model.addAttribute("LoggedInUser", exists);
-            return "loggedIn";
+            return "/loggedIn";
         }
         return "home";
+    }
+
+    //The homepage
+    @RequestMapping(value = "/loggedIn")
+    public String loggedIn(){
+        return "loggedIn";
     }
 
     //Log out of your account
