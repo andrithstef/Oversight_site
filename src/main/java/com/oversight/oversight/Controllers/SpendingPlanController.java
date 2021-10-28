@@ -51,6 +51,7 @@ public class SpendingPlanController {
         User loggedIn = (User) session.getAttribute("LoggedInUser");
         SpendingPlan spendingPlanExists = spendingPlanService.findByUser(loggedIn);
         if (spendingPlanExists == null) {
+            spendingPlan.setUser(loggedIn);
             spendingPlanService.save(spendingPlan);
             return "redirect:/seeSpendingPlan";
         }
