@@ -23,6 +23,7 @@ public class UserController {
     }
 
     @RequestMapping("/")
+    //This is the page you go to when opening the website
     public String homePage(Model model, HttpSession session){
         return "home";
     }

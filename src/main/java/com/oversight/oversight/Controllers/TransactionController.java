@@ -46,17 +46,22 @@ public class TransactionController {
         if(result.hasErrors()){
             return "newTransaction";
         }
-
+        //Get logged in user, and connect to transactions
         User loggedIn = (User) session.getAttribute("LoggedInUser");
         transaction.setUser(loggedIn);
+
+        //Save the transaction in the database, and redirect to see transactions page
         transactionService.save(transaction);
         return "redirect:/seeTransactions";
     }
 
     @RequestMapping(value="/delete/{id}", method = RequestMethod.GET)
     public String deleteTransaction(@PathVariable("id") long id, Model model, HttpSession session){
+        //Get the transaction from the database, and delete
         Transaction transactionToDelete = transactionService.findByID(id);
         transactionService.delete(transactionToDelete);
+
+        //update model with the new transaction list, redirect to see transactions page
         User loggedIn = (User) session.getAttribute("LoggedInUser");
         model.addAttribute("transactions", loggedIn.getTransactions());
         return "redirect:/seeTransactions";

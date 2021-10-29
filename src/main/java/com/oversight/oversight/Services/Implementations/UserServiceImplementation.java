@@ -47,18 +47,24 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public User login(User user) {
+        //check if user exists
         User exists= findByUsername(user.getUsername());
         if(exists != null){
+            //User exists, return user
             if(exists.getPassword().equals(user.getPassword())){
                 return exists;
             }
         }
+        //User does not exist, return null
         return null;
     }
 
     @Override
     public User changePassword(User user, String password) {
+        //update password, N.B. this is the hashed password,
+        //  not the password hat the user knows
         user.setPassword(password);
+        //return the user with the updated password
         return userRepository.save(user);
     }
 
