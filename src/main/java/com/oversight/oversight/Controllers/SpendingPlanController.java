@@ -39,25 +39,27 @@ public class SpendingPlanController {
     @RequestMapping(value = "/createSpendingPlan", method = RequestMethod.GET)
     public String createSpendingPlanGET(Model model){
         model.addAttribute("spendingplan", new SpendingPlan());
-        //fara yfir á síðuna createUser
         return "newSpendingPlan";
     }
-
+    //Creates the spending plan
     @RequestMapping(value = "/createSpendingPlan", method = RequestMethod.POST)
     public String createSpendingPlanPOST(@ModelAttribute("spendingplan") SpendingPlan spendingPlan, BindingResult result, HttpSession session){
+        //Checks for errors
         if (result.hasErrors()){
             return "newSpendingPlan";
         }
+        //Sets the user for the spending plan
         User loggedIn = (User) session.getAttribute("LoggedInUser");
         SpendingPlan spendingPlanExists = spendingPlanService.findByUser(loggedIn);
+        //Checks if the spending plan already exists
         if (spendingPlanExists == null) {
-            spendingPlan.setUser(loggedIn);
-            spendingPlanService.save(spendingPlan);
-            return "redirect:/seeSpendingPlan";
+                spendingPlan.setUser(loggedIn);
+                spendingPlanService.save(spendingPlan);
+                return "redirect:/seeSpendingPlan";
         }
         return "spendingPlanAlreadyExists";
     }
-
+    //Deletes the spending plan
     @RequestMapping(value="/deletespendingplan/{id}", method = RequestMethod.GET)
     public String deleteSpendingPlan(@PathVariable("id") long id, Model model){
         SpendingPlan spendingPlanToDelete = spendingPlanService.findByID(id);
