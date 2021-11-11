@@ -3,6 +3,7 @@ package com.oversight.oversight.Services;
 import com.oversight.oversight.Persistence.Entities.Transaction;
 import com.oversight.oversight.Persistence.Entities.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface TransactionService {
@@ -11,4 +12,5 @@ public interface TransactionService {
     Transaction save(Transaction transaction);
     void delete(Transaction transaction);
     List<Transaction> findAllByUser(User user);
+    ArrayList<ArrayList<Object>> getChartData(User user);
 }

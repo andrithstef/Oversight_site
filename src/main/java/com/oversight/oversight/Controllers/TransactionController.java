@@ -6,6 +6,9 @@ import com.oversight.oversight.Services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+
+import java.util.ArrayList;
+import java.util.Random;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +19,7 @@ import java.util.List;
 
 @Controller
 public class TransactionController {
+    private static final Random RANDOM = new Random(System.currentTimeMillis());
 
     private TransactionService transactionService;
 
@@ -33,6 +37,10 @@ public class TransactionController {
 
         // Add data to the model
         model.addAttribute("transactions", allTransactions);
+
+        model.addAttribute("chartData",
+                getChartData((User)session.getAttribute("LoggedInUser")));
+
         return "seeTransactions";
     }
 
@@ -67,6 +75,17 @@ public class TransactionController {
         return "redirect:/seeTransactions";
     }
 
-
+    //Skilar dummy data
+    private ArrayList<ArrayList<Object>> getChartData(User user){
+        /*
+        String s = "mushrooms";
+        int i = 10;
+        return List.of(
+                List.of(s, i),
+                List.of("Pepperoni", 25)
+        );
+        */
+        return transactionService.getChartData(user);
+    }
 
 }

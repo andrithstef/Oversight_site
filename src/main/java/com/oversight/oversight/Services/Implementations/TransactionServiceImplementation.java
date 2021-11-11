@@ -7,7 +7,7 @@ import com.oversight.oversight.Services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.*;
 
 @Service
 public class TransactionServiceImplementation implements TransactionService {
@@ -42,5 +42,29 @@ public class TransactionServiceImplementation implements TransactionService {
     @Override
     public List<Transaction> findAllByUser(User user) {
         return transactionRepository.findAllByUser(user);
+    }
+
+    @Override
+    public ArrayList<ArrayList<Object>> getChartData(User user) {
+
+        //Create empty list
+        ArrayList<ArrayList<Object>> chartData = new ArrayList<ArrayList<Object>>();
+
+        //get all transactions
+        List<Transaction> transactions = transactionRepository.findAllByUser(user);
+
+        //Add each transaction to the empty list as a pair of category and amount
+        for (Transaction t : transactions){
+            String s = t.getCategory();
+            int i = t.getAmount();
+            System.out.println(s);
+            System.out.println(i);
+            ArrayList<Object> temp = new ArrayList<Object>();
+            temp.add(s);
+            temp.add(i);
+            chartData.add(temp);
+        }
+
+        return chartData;
     }
 }
