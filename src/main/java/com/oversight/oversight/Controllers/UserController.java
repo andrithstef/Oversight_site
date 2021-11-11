@@ -112,7 +112,7 @@ public class UserController {
             //The password is correct
             session.setAttribute("LoggedInUser", null);
             userService.delete(loggedIn);
-            return "home";
+            return "redirect:/";
         }
         //Try again
         return "/deleteUser";
