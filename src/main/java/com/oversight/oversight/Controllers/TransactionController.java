@@ -37,7 +37,7 @@ public class TransactionController {
     }
 
     @RequestMapping(value="/addTransaction", method = RequestMethod.GET)
-    public String addTransactionGET(Transaction transaction){
+    public String addTransactionGET(Transaction transaction, User user){
         return "newTransaction";
     }
 
