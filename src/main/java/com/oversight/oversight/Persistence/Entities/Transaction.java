@@ -1,6 +1,11 @@
 package com.oversight.oversight.Persistence.Entities;
 
+import org.apache.tomcat.jni.Local;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @Table(name="transactions")
@@ -16,13 +21,17 @@ public class Transaction {
 
     private String category;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate date;
+
     public Transaction() {
     }
 
-    public Transaction(int amount, User user, String category) {
+    public Transaction(int amount, User user, String category, LocalDate date) {
         this.amount = amount;
         this.user = user;
         this.category = category;
+        this.date = date;
     }
 
     public long getID() {
@@ -40,6 +49,10 @@ public class Transaction {
     public void setAmount(int amount) {
         this.amount = amount;
     }
+
+    public void setDate(LocalDate date){this.date = date;}
+
+    public LocalDate getDate(){return this.date;}
 
     public User getUser() {
         return user;
