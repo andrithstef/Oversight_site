@@ -47,6 +47,8 @@ public class TransactionServiceImplementation implements TransactionService {
     @Override
     public ArrayList<ArrayList<Object>> getChartData(User user) {
 
+        System.out.println("What the fuck???");
+
         //Create empty list
         ArrayList<ArrayList<Object>> chartData = new ArrayList<ArrayList<Object>>();
 
