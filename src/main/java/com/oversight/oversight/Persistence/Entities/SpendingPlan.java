@@ -1,6 +1,8 @@
 package com.oversight.oversight.Persistence.Entities;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.TreeMap;
 
 @Entity
 @Table(name="spendingplan")
@@ -9,10 +11,8 @@ public class SpendingPlan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long ID;
 
-    private float food;
-    private float car;
-    private float booze;
-    private float electronics;
+    @ElementCollection
+    private TreeMap<Category, Integer> catMap;
 
     @OneToOne
     private User user;
@@ -20,12 +20,12 @@ public class SpendingPlan {
     public SpendingPlan() {
     }
 
-    public SpendingPlan(User user, float food, float car, float booze, float electronics) {
-        this.user = user;
-        this.food = food;
-        this.car = car;
-        this.booze = booze;
-        this.electronics = electronics;
+    public SpendingPlan(User user, ArrayList<Transaction> cats){
+        TreeMap<Category, Integer> catMap = new TreeMap<Category, Integer>();
+        for(Transaction t: cats){
+            catMap.put(t.getCategory(), t.getAmount());
+        }
+        this.catMap = catMap;
     }
 
     public long getID() {
@@ -42,37 +42,5 @@ public class SpendingPlan {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public float getFood() {
-        return food;
-    }
-
-    public void setFood(float food) {
-        this.food = food;
-    }
-
-    public float getCar() {
-        return car;
-    }
-
-    public void setCar(float car) {
-        this.car = car;
-    }
-
-    public float getBooze() {
-        return booze;
-    }
-
-    public void setBooze(float booze) {
-        this.booze = booze;
-    }
-
-    public float getElectronics() {
-        return electronics;
-    }
-
-    public void setElectronics(float electronics) {
-        this.electronics = electronics;
     }
 }
