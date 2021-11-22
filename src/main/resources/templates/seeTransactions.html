@@ -129,35 +129,56 @@
     google.charts.load('current', {'packages':['corechart']});
 
     // Set a callback to run when the Google Visualization API is loaded.
-    google.charts.setOnLoadCallback(drawChart);
+    google.charts.setOnLoadCallback(drawPieChart);
+    google.charts.setOnLoadCallback(drawLineChart);
 
     // Callback that creates and populates a data table,
     // instantiates the pie chart, passes in the data and
     // draws it.
-    function drawChart() {
+    function drawPieChart() {
 
         // Create the data table.
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'Category');
         data.addColumn('number', 'Amount');
-        data.addRows([[${chartData}]]);
-
+        data.addRows([[${pieChartData}]]);
 
         // Set chart options
         var options = {
-            'title':'Your transactions',
-            'titleTextStyle':{color: 'White', fontName: 'Arial', fontSize: 40,},
-            'legend':{textStyle:{color:'white'}},
-            'width':700,
-            'height':600,
-            'backgroundColor': '#111111'};
+            'title': 'Your transactions',
+            'titleTextStyle': {color: 'White', fontName: 'Arial', fontSize: 40,},
+            'legend': {textStyle: {color: 'white'}},
+            'width': 1000,
+            'height': 800,
+            'backgroundColor': '#111111'
+        };
 
         // Instantiate and draw our chart, passing in some options.
-        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+        var chart = new google.visualization.PieChart(document.getElementById('chart1_div'));
+        chart.draw(data, options);
+    }
+
+    function drawLineChart() {
+
+        var data = google.visualization.arrayToDataTable([[${lineChartData}]]);
+
+
+        var options = {
+            'title': 'Your spending per month',
+            'titleTextStyle': {color: 'White', fontName: 'Arial', fontSize: 40,},
+            curveType: 'function',
+            'width': 1000,
+            'height': 1000,
+            'legend': {textStyle: {color: 'white'}},
+            'backgroundColor': '#111111'
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
         chart.draw(data, options);
     }
 </script>
-<div class = "center-screen" id = "chart_div">
+<div class = "center-screen" href="../CSS/spendingPlan.css" id="chart1_div"></div>
+<div class = "center-screen" href="../CSS/spendingPlan.css" id="curve_chart"></div>
 </div>
 </body>
 </html>

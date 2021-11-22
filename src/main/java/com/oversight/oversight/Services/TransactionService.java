@@ -12,5 +12,6 @@ public interface TransactionService {
     Transaction save(Transaction transaction);
     void delete(Transaction transaction);
     List<Transaction> findAllByUser(User user);
-    ArrayList<ArrayList<Object>> getChartData(User user);
+    ArrayList<ArrayList<Object>> getPieChartData(User user);
+    ArrayList<ArrayList<Object>> getLineChartData(User user);
 }

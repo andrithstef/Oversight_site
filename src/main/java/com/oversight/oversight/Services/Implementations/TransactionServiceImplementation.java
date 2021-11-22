@@ -7,6 +7,7 @@ import com.oversight.oversight.Services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Month;
 import java.util.*;
 
 @Service
@@ -45,9 +46,10 @@ public class TransactionServiceImplementation implements TransactionService {
     }
 
     @Override
-    public ArrayList<ArrayList<Object>> getChartData(User user) {
+    public ArrayList<ArrayList<Object>> getPieChartData(User user) {
 
-        System.out.println("What the fuck???");
+        //Create dictionary
+        HashMap<String, Integer> map = new HashMap<String, Integer>();
 
         //Create empty list
         ArrayList<ArrayList<Object>> chartData = new ArrayList<ArrayList<Object>>();
@@ -59,14 +61,66 @@ public class TransactionServiceImplementation implements TransactionService {
         for (Transaction t : transactions){
             String s = t.getCategory();
             int i = t.getAmount();
-            System.out.println(s);
-            System.out.println(i);
+            if(map.containsKey(s)){
+                map.put(s, map.get(s)+i);
+            }
+            else{
+                map.put(s, i);
+            }
+        }
+
+        Iterator<Map.Entry<String, Integer>> entrySet = map.entrySet().iterator();
+
+        while(entrySet.hasNext()){
+            Map.Entry<String, Integer> entry = entrySet.next();
             ArrayList<Object> temp = new ArrayList<Object>();
-            temp.add(s);
-            temp.add(i);
+            temp.add(entry.getKey());
+            temp.add(entry.getValue());
             chartData.add(temp);
         }
 
+        return chartData;
+    }
+
+    @Override
+    public ArrayList<ArrayList<Object>> getLineChartData(User user) {
+        //Initialize the data, by month and spending
+        ArrayList<ArrayList<Object>> chartData = new ArrayList<ArrayList<Object>>();
+        ArrayList<Object> temp = new ArrayList<Object>();
+        temp.add("month"); // x axis
+        temp.add("spending"); //y axis
+        chartData.add(temp); //add to chartData
+
+        //Initialize a Treemap to pool all transactions for each month into one value
+        //I use a Treemap because it automatically sorts my keys, i.e. the months
+        TreeMap<Month, Integer> map = new TreeMap<Month, Integer>();
+
+        //Get all transactions
+        List<Transaction> transactions = transactionRepository.findAllByUser(user);
+
+
+        //Add each transaction to the empty list as a pair of month and amount
+        for (Transaction t : transactions){
+            Month m = t.getDate().getMonth();
+            int i = t.getAmount();
+
+            if(map.containsKey(m)){
+                map.put(m, map.get(m)+i);
+            }
+            else{
+                map.put(m, i);
+            }
+        }
+
+        Iterator<Map.Entry<Month, Integer>> entrySet = map.entrySet().iterator();
+
+        while(entrySet.hasNext()){
+            Map.Entry<Month, Integer> entry = entrySet.next();
+            temp = new ArrayList<Object>();
+            temp.add(entry.getKey());
+            temp.add(entry.getValue());
+            chartData.add(temp);
+        }
         return chartData;
     }
 }

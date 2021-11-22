@@ -53,7 +53,7 @@ public class UserController {
             return "home";
         }
         //redirect to homepage
-        return "home";
+        return "userAlreadyExists";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -72,10 +72,13 @@ public class UserController {
 
         //The user exists and the password is correct
         //log in and move to user page
-        if (exists != null && hashedPassword.equals(exists.getPassword())){
-            session.setAttribute("LoggedInUser", exists);
-            model.addAttribute("LoggedInUser", exists);
-            return "/loggedIn";
+        if (exists != null){
+            if(hashedPassword.equals(exists.getPassword())) {
+                session.setAttribute("LoggedInUser", exists);
+                model.addAttribute("LoggedInUser", exists);
+                return "/loggedIn";
+            }
+            return "wrongPassword";
         }
         return "home";
     }
