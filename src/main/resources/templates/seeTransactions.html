@@ -79,7 +79,7 @@
 </head>
 <body>
 <div style="padding-left:20px" class="header">
-    <a href="/loggedIn" class="logo">Oversight</a>
+    <a href="/seeTransactions" class="logo">Oversight</a>
     <div style="padding-left:1390px">
         <a href="/seeTransactions">See transactions</a>
         <a href="/seeSpendingPlan">See spending plan</a>
@@ -110,7 +110,7 @@
             <tbody>
             <tr th:each="transaction : ${transactions}">
                 <td th:text="${transaction.amount}"></td>
-                <td th:text="${transaction.category}"></td>
+                <td th:text="${transaction.category.displayName}"></td>
                 <td th:text="${transaction.date}"></td>
                 <td><a th:href="@{/delete/{id}(id=${transaction.ID})}">Delete</a></td>
             </tr>
