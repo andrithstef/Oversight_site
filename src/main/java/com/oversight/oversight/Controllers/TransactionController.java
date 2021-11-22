@@ -24,6 +24,8 @@ public class TransactionController {
     @Autowired
     public TransactionController(TransactionService transactionService){
         this.transactionService = transactionService;
+
+
     }
 
     @RequestMapping("/seeTransactions")
