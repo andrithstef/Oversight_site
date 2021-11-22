@@ -20,12 +20,12 @@ public class SpendingPlan {
     public SpendingPlan() {
     }
 
-    public SpendingPlan(User user, ArrayList<Transaction> cats) {
-        this.user = user;
+    public SpendingPlan(User user, ArrayList<Transaction> cats){
         TreeMap<Category, Integer> catMap = new TreeMap<Category, Integer>();
-        for(Transaction t : cats){
+        for(Transaction t: cats){
             catMap.put(t.getCategory(), t.getAmount());
         }
+        this.catMap = catMap;
     }
 
     public long getID() {
@@ -42,13 +42,5 @@ public class SpendingPlan {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public TreeMap<Category, Integer> getCatMap() {
-        return catMap;
-    }
-
-    public void setCatMap(TreeMap<Category, Integer> catMap) {
-        this.catMap = catMap;
     }
 }
