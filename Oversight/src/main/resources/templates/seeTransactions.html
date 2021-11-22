@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+    * {box-sizing: border-box;}
+
+    body {
+        margin: 10px;
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #111111;
+    }
+
+    .header a {
+        float: left;
+        color: white;
+        padding: 12px;
+        text-decoration: none;
+        font-size: 18px;
+        line-height: 25px;
+        border-radius: 4px;
+    }
+
+    .header a.logo {
+        font-size: 25px;
+        font-weight: bold;
+    }
+
+    .header a:hover {
+        background-color: #ddd;
+        color: black;
+    }
+
+    @media screen and (max-width: 500px) {
+        .header a {
+            float: none;
+            display: block;
+            text-align: left;
+        }
+
+    }
+
+    .center-screen {
+        display: grid;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        min-height: 100vh;
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        border-radius: 4px;
+        display: none;
+        position: absolute;
+        background-color: #15172b;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        padding: 12px 16px;
+        z-index: 1;
+
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .transaction {
+        padding: 100px 0px 0px 800px;
+        color: white;
+    }
+</style>
+<head>
+    <meta charset="UTF-8">
+    <title>Transactions</title>
+</head>
+<body>
+<div style="padding-left:20px" class="header">
+    <a href="/loggedIn" class="logo">Oversight</a>
+    <div style="padding-left:1390px">
+        <a href="/seeTransactions">See transactions</a>
+        <a href="/seeSpendingPlan">See spending plan</a>
+        <div class="dropdown">
+            <a>My Account</a>
+            <div class="dropdown-content">
+                <a style="font-size: 12px" href="/logout">Log out</a>
+                <a style="font-size: 12px" href="/changePassword">Change password</a>
+                <a style="font-size: 12px" href="/deleteUser">Delete account</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="transaction" th:switch="${transactions}">
+    <h2 th:case="null">No Transactions yet!</h2>
+    <div th:case="*">
+        <h2>Transactions</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>amount</th>
+                <th>Category</th>
+                <th>Date</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="transaction : ${transactions}">
+                <td th:text="${transaction.amount}"></td>
+                <td th:text="${transaction.category}"></td>
+                <td th:text="${transaction.date}"></td>
+                <td><a th:href="@{/delete/{id}(id=${transaction.ID})}">Delete</a></td>
+            </tr>
+            </tbody>
+        </table>
+        <div style="padding-left:400px">
+            <a href="/addTransaction">Add a new transaction</a>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript" th:inline="javascript">
+
+    // Load the Visualization API and the corechart package.
+    google.charts.load('current', {'packages':['corechart']});
+
+    // Set a callback to run when the Google Visualization API is loaded.
+    google.charts.setOnLoadCallback(drawPieChart);
+    google.charts.setOnLoadCallback(drawLineChart);
+
+    // Callback that creates and populates a data table,
+    // instantiates the pie chart, passes in the data and
+    // draws it.
+    function drawPieChart() {
+
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Category');
+        data.addColumn('number', 'Amount');
+        data.addRows([[${pieChartData}]]);
+
+        // Set chart options
+        var options = {
+            'title': 'Your transactions',
+            'titleTextStyle': {color: 'White', fontName: 'Arial', fontSize: 40,},
+            'legend': {textStyle: {color: 'white'}},
+            'width': 1000,
+            'height': 800,
+            'backgroundColor': '#111111'
+        };
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.PieChart(document.getElementById('chart1_div'));
+        chart.draw(data, options);
+    }
+
+    function drawLineChart() {
+
+        var data = google.visualization.arrayToDataTable([[${lineChartData}]]);
+
+
+        var options = {
+            'title': 'Your spending per month',
+            'titleTextStyle': {color: 'White', fontName: 'Arial', fontSize: 40,},
+            curveType: 'function',
+            'width': 1000,
+            'height': 1000,
+            'legend': {textStyle: {color: 'white'}},
+            'backgroundColor': '#111111'
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+        chart.draw(data, options);
+    }
+</script>
+<div class = "center-screen" href="../CSS/spendingPlan.css" id="chart1_div"></div>
+<div class = "center-screen" href="../CSS/spendingPlan.css" id="curve_chart"></div>
+</div>
+</body>
+</html>

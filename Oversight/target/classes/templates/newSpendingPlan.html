@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+    <meta charset="UTF-8">
+    <title>Create a Spending Plan</title>
+    <link rel="stylesheet" href="spendingPlan.css">
+</head>
+<body>
+<div style="padding-left:20px" class="header">
+    <a href="/loggedIn" class="logo">Oversight</a>
+    <div style="padding-left:1390px">
+        <a href="/seeTransactions">See transactions</a>
+        <a href="/seeSpendingPlan">See spending plan</a>
+        <div class="dropdown">
+            <a>My Account</a>
+            <div class="dropdown-content">
+                <a style="font-size: 12px" href="/logout">Log out</a>
+                <a style="font-size: 12px" href="/changePassword">Change password</a>
+                <a style="font-size: 12px" href="/deleteUser">Delete account</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form" style="margin: 10vh auto">
+    <div class="title" style="padding-left: 6.4vh;">Create Your Spending Plan</div>
+    <div class="subtitle" style="padding-left: 12.8vh;">Values need to add up to 100</div>
+    <form action="#" th:action="@{/createSpendingPlan}" th:object="${spendingplan}" method="post">
+        <div class="input-container ic1">
+            <input type="text" class="input" th:field="*{food}" id="food" placeholder="Food">
+            <span th:if="${#fields.hasErrors('food')}" th:errors="*{food}"></span>
+            <div class="cut"></div>
+        </div>
+        <div class="input-container ic2">
+            <input type="text" class="input" th:field="*{car}" id="car" placeholder="Car">
+            <span th:if="${#fields.hasErrors('car')}" th:errors="*{car}"></span>
+            <div class="cut"></div>
+        </div>
+        <div class="input-container ic3">
+            <input type="text" class="input" th:field="*{booze}" id="booze" placeholder="Booze">
+            <span th:if="${#fields.hasErrors('booze')}" th:errors="*{booze}"></span>
+            <div class="cut"></div>
+        </div>
+        <div class="input-container ic4">
+            <input type="text" class="input" th:field="*{electronics}" id="electronics" placeholder="Electronics">
+            <span th:if="${#fields.hasErrors('electronics')}" th:errors="*{electronics}"></span>
+        </div>
+        <input type="submit" class="submit" value="Create Spending Plan">
+    </form>
+</div>
+<div >
+    <label id="theme-switch" class="theme-switch" for="checkbox_theme">
+        <input type="checkbox" id="checkbox_theme"> Dark/Light Mode
+    </label>
+</div>
+</body>
+</html>
