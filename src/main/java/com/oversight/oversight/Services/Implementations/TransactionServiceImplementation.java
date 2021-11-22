@@ -59,7 +59,7 @@ public class TransactionServiceImplementation implements TransactionService {
 
         //Add each transaction to the empty list as a pair of category and amount
         for (Transaction t : transactions){
-            String s = t.getCategory();
+            String s = t.getCategory().getDisplayName();
             int i = t.getAmount();
             if(map.containsKey(s)){
                 map.put(s, map.get(s)+i);

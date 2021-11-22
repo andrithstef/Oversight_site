@@ -19,7 +19,7 @@ public class Transaction {
     @ManyToOne
     private User user;
 
-    private String category;
+    private Category category;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
@@ -27,7 +27,7 @@ public class Transaction {
     public Transaction() {
     }
 
-    public Transaction(int amount, User user, String category, LocalDate date) {
+    public Transaction(int amount, User user, Category category, LocalDate date) {
         this.amount = amount;
         this.user = user;
         this.category = category;
@@ -62,11 +62,11 @@ public class Transaction {
         this.user = user;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 }

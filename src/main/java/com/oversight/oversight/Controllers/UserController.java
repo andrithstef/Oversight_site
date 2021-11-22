@@ -139,7 +139,7 @@ public class UserController {
 
         if(!loggedIn.getPassword().equals(oldPassword)){
             //the old password is incorrect, redirect to homepage
-            return "/loggedIn";
+            return "/seeTransactions";
         }
         //The password is correct, change to new one
         newPassword = userService.get_SHA_512(newPassword);
@@ -148,6 +148,6 @@ public class UserController {
         //Update the logged in user in the session
         session.setAttribute("LoggedInUser", loggedIn);
         model.addAttribute("transactions", loggedIn.getTransactions());
-        return "/loggedIn";
+        return "/seeTransactions";
     }
 }
