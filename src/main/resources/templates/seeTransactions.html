@@ -52,6 +52,24 @@
         display: inline-block;
     }
 
+    .container {
+        left: 30px;
+        padding: 0;
+        margin: 0;
+    }
+
+    .transaction {
+        padding-top: 100px;
+        display: inline-block;
+        float: left;
+        color: white;
+    }
+
+    .right-element {
+        display: inline-block;
+        float: left;
+    }
+
     .dropdown-content {
         border-radius: 4px;
         display: none;
@@ -59,19 +77,19 @@
         background-color: #15172b;
         min-width: 160px;
         box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-        padding: 12px 16px;
         z-index: 1;
 
+    }
+
+    .addTrans{
+        padding-left: 20px;
+        padding-bottom: 20px;
     }
 
     .dropdown:hover .dropdown-content {
         display: block;
     }
 
-    .transaction {
-        padding: 100px 0px 0px 800px;
-        color: white;
-    }
 </style>
 <head>
     <meta charset="UTF-8">
@@ -94,33 +112,40 @@
     </div>
 </div>
 
-<div class="transaction" th:switch="${transactions}">
-    <h2 th:case="null">No Transactions yet!</h2>
-    <div th:case="*">
-        <h2>Transactions</h2>
-        <table>
-            <thead>
-            <tr>
-                <th>amount</th>
-                <th>Category</th>
-                <th>Date</th>
-                <th>Delete</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="transaction : ${transactions}">
-                <td th:text="${transaction.amount}"></td>
-                <td th:text="${transaction.category.displayName}"></td>
-                <td th:text="${transaction.date}"></td>
-                <td><a th:href="@{/delete/{id}(id=${transaction.ID})}">Delete</a></td>
-            </tr>
-            </tbody>
-        </table>
-        <div style="padding-left:400px">
-            <a href="/addTransaction">Add a new transaction</a>
+<div class="container">
+    <div class="transaction" th:switch="${transactions}">
+        <h2 th:case="null">No Transactions yet!</h2>
+        <div th:case="*">
+            <h2>Transactions</h2>
+            <div class="addTrans">
+                <a href="/addTransaction">Add a new transaction</a>
+            </div>
+            <table>
+                <thead>
+                <tr>
+                    <th>amount</th>
+                    <th>Category</th>
+                    <th>Date</th>
+                    <th>Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="transaction : ${transactions}">
+                    <td th:text="${transaction.amount}"></td>
+                    <td th:text="${transaction.category.displayName}"></td>
+                    <td th:text="${transaction.date}"></td>
+                    <td><a th:href="@{/delete/{id}(id=${transaction.ID})}">Delete</a></td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
+    <div class="right-element">
+        <div class = "center-screen" href="../CSS/spendingPlan.css" id="chart1_div"></div>
+        <div class = "center-screen" href="../CSS/spendingPlan.css" id="curve_chart"></div>
+    </div>
 </div>
+
 </body>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript" th:inline="javascript">
@@ -177,8 +202,6 @@
         chart.draw(data, options);
     }
 </script>
-<div class = "center-screen" href="../CSS/spendingPlan.css" id="chart1_div"></div>
-<div class = "center-screen" href="../CSS/spendingPlan.css" id="curve_chart"></div>
 </div>
 </body>
 </html>
