@@ -1,6 +1,7 @@
 package com.oversight.oversight.Persistence.Entities;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 
 @Entity
 @Table(name="spendingplan")
@@ -8,6 +9,8 @@ public class SpendingPlan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long ID;
+    @ElementCollection
+    private ArrayList<ArrayList<Object>> categoryAmountList;
 
     private float food;
     private float car;
@@ -26,6 +29,9 @@ public class SpendingPlan {
         this.car = car;
         this.booze = booze;
         this.electronics = electronics;
+
+
+
     }
 
     public long getID() {
