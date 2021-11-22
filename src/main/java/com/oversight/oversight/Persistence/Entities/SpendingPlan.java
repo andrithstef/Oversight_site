@@ -11,8 +11,6 @@ public class SpendingPlan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long ID;
 
-    @ElementCollection
-    private TreeMap<Category, Integer> catMap;
 
     @OneToOne
     private User user;
@@ -20,12 +18,8 @@ public class SpendingPlan {
     public SpendingPlan() {
     }
 
-    public SpendingPlan(User user, ArrayList<Transaction> cats){
-        TreeMap<Category, Integer> catMap = new TreeMap<Category, Integer>();
-        for(Transaction t: cats){
-            catMap.put(t.getCategory(), t.getAmount());
-        }
-        this.catMap = catMap;
+    public SpendingPlan(User user){
+        this.user = user;
     }
 
     public long getID() {
