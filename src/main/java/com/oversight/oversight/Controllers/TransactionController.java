@@ -7,14 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.Year;
 import java.util.ArrayList;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -22,6 +22,8 @@ import java.util.List;
 
 @Controller
 public class TransactionController {
+
+    public static String uploadDirectory = System.getProperty("user.dir")+ "/uploads";
 
     private TransactionService transactionService;
 
@@ -81,6 +83,18 @@ public class TransactionController {
         //update model with the new transaction list, redirect to see transactions page
         User loggedIn = (User) session.getAttribute("LoggedInUser");
         model.addAttribute("transactions", loggedIn.getTransactions());
+        return "redirect:/seeTransactions";
+    }
+
+    @RequestMapping("/uploadFile")
+    public String uploadPage(Model model){
+        return "uploadView";
+    }
+
+    @RequestMapping("/upload")
+    public String upload(Model model, @RequestParam("file") MultipartFile file){
+        System.out.println("HallóHallóHalló");
+        System.out.println(file.getContentType());
         return "redirect:/seeTransactions";
     }
 
