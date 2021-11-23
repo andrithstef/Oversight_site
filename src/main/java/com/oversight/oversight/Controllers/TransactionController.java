@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,7 +40,10 @@ public class TransactionController {
         // Add data to the model
         model.addAttribute("transactions", allTransactions);
 
-        model.addAttribute("pieChartData", getPieChartData(loggedIn));
+        Month currentMonth = LocalDate.now().getMonth();
+        model.addAttribute("month", currentMonth);
+
+        model.addAttribute("pieChartData", getPieChartData(loggedIn, currentMonth));
         model.addAttribute("lineChartData", getLineChartData(loggedIn));
 
         return "seeTransactions";
@@ -75,8 +80,8 @@ public class TransactionController {
         return "redirect:/seeTransactions";
     }
 
-    private ArrayList<ArrayList<Object>> getPieChartData(User user){
-        return transactionService.getPieChartData(user);
+    private ArrayList<ArrayList<Object>> getPieChartData(User user, Month month){
+        return transactionService.getPieChartData(user, month);
     }
     private ArrayList<ArrayList<Object>> getLineChartData(User user){
         return transactionService.getLineChartData(user);

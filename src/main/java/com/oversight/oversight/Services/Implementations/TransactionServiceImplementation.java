@@ -46,7 +46,7 @@ public class TransactionServiceImplementation implements TransactionService {
     }
 
     @Override
-    public ArrayList<ArrayList<Object>> getPieChartData(User user) {
+    public ArrayList<ArrayList<Object>> getPieChartData(User user, Month month) {
 
         //Create dictionary
         HashMap<String, Integer> map = new HashMap<String, Integer>();
@@ -61,11 +61,13 @@ public class TransactionServiceImplementation implements TransactionService {
         for (Transaction t : transactions){
             String s = t.getCategory().getDisplayName();
             int i = t.getAmount();
-            if(map.containsKey(s)){
-                map.put(s, map.get(s)+i);
-            }
-            else{
-                map.put(s, i);
+            if(t.getDate().getMonth().equals(month)){
+                if(map.containsKey(s)){
+                    map.put(s, map.get(s)+i);
+                }
+                else{
+                    map.put(s, i);
+                }
             }
         }
 
