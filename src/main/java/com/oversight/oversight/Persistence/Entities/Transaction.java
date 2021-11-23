@@ -4,6 +4,7 @@ import org.apache.tomcat.jni.Local;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.Date;
@@ -15,7 +16,7 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long ID;
 
-    @Size(min=0, message = "the amount cannot be less than zero")
+    @Min(value = 0, message = "the amount cannot be less than zero")
     private int amount;
 
     @ManyToOne

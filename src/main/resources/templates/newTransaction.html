@@ -7,7 +7,7 @@
   body {
     margin: 10px;
     font-family: Arial, Helvetica, sans-serif;
-    background-color: black;
+    background-color: #111111;
     color : white;
   }
 
@@ -99,7 +99,8 @@
   </div>
   <label for="amount">Amount</label>
   <input type="text" th:field="*{amount}" id="amount" placeholder="Amount">
-  <span th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}"></span>
+  <p th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}">amount can't be negative</p>
+
   <input type="date" th:field="*{date}" id="date" placeholder="Date">
   <span th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></span>
   <input type="submit" value="Add Transaction">

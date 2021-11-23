@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="https://thymeleaf.org">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+    * {box-sizing: border-box;}
+
+    body {
+        margin: 10px;
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #111111;
+        color : white;
+    }
+
+    .header a {
+        float: left;
+        color: white;
+        padding: 12px;
+        text-decoration: none;
+        font-size: 18px;
+        line-height: 25px;
+        border-radius: 4px;
+    }
+
+    .header a.logo {
+        font-size: 25px;
+        font-weight: bold;
+    }
+
+    .header a:hover {
+        background-color: #ddd;
+        color: black;
+    }
+
+    @media screen and (max-width: 500px) {
+        .header a {
+            float: none;
+            display: block;
+            text-align: left;
+        }
+
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        border-radius: 4px;
+        display: none;
+        position: absolute;
+        background-color: #15172b;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        padding: 12px 16px;
+        z-index: 1;
+
+    }
+
+    .center-screen {
+        display: grid;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding-top: 100px;
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .newtra {
+        padding: 100px 0px 0px 600px;
+        color: white;
+    }
+</style>
+<head>
+    <meta charset="UTF-8">
+    <title>Add a new Transaction</title>
+</head>
+<body>
+<div style="padding-left:20px" class="header">
+    <a href="/seeTransactions" class="logo">Oversight</a>
+    <div style="padding-left:1390px">
+        <a href="/seeTransactions">See transactions</a>
+        <a href="/seeSpendingPlan">See spending plan</a>
+        <div class="dropdown">
+            <a>My Account</a>
+            <div class="dropdown-content">
+                <a style="font-size: 12px" href="/logout">Log out</a>
+                <a style="font-size: 12px" href="/changePassword">Change password</a>
+                <a style="font-size: 12px" href="/deleteUser">Delete account</a>
+            </div>
+        </div>
+    </div>
+</div>
+<form class="newtra" action="#" th:action="@{/addTransaction}" th:object="${transaction}" method="post">
+    <div class="select form-group">
+        Category
+        <select class="form-control" id="category" th:field="*{category}">
+            <option th:each="category : ${T(com.oversight.oversight.Persistence.Entities.Category).values()}"
+                    th:value="${category}"
+                    th:text="${category.displayName}"
+            ></option>
+        </select>
+        <span th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></span>
+    </div>
+    <label for="amount">Amount</label>
+    <input type="text" th:field="*{amount}" id="amount" placeholder="Amount">
+    <p th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}">amount can't be negative</p>
+
+    <input type="date" th:field="*{date}" id="date" placeholder="Date">
+    <span th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></span>
+    <input type="submit" value="Add Transaction">
+</form>
+<div class="center-screen">The amount cannot be negative</div>
+</body>
+</html>

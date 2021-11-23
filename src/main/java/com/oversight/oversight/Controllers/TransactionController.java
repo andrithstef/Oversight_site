@@ -11,11 +11,13 @@ import java.time.LocalDate;
 import java.time.Year;
 import java.util.ArrayList;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -52,10 +54,15 @@ public class TransactionController {
     }
 
     @RequestMapping(value="/addTransaction", method = RequestMethod.POST)
-    public String addTransactionPOST(Transaction transaction, BindingResult result, Model model, HttpSession session){
+    public String addTransactionPOST(@ModelAttribute @Valid Transaction transaction, BindingResult result, Model model, HttpSession session){
         if(result.hasErrors()){
             return "newTransaction";
         }
+
+        if(transaction.getAmount() < 0){
+            return "wrongAmount";
+        }
+
         //Get logged in user, and connect to transactions
         User loggedIn = (User) session.getAttribute("LoggedInUser");
         transaction.setUser(loggedIn);
