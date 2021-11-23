@@ -79,6 +79,80 @@ public class TransactionServiceImplementation implements TransactionService {
     }
 
     @Override
+    public List<Transaction> findAllByUserByCategory(User user) {
+        List<Transaction> all = transactionRepository.findAllByUser(user);
+
+        TreeMap<String, ArrayList<Transaction>> tree = new TreeMap<String, ArrayList<Transaction>>();
+
+        ArrayList<Transaction> temp = new ArrayList<Transaction>();
+
+        for(Transaction t: all){
+            String s = t.getCategory().getDisplayName();
+            if(tree.containsKey(s)){
+                temp = tree.get(s);
+                temp.add(t);
+                tree.put(s, temp);
+            }
+            else{
+                temp = new ArrayList<Transaction>();
+                temp.add(t);
+                tree.put(s, temp);
+            }
+        }
+
+        Iterator<Map.Entry<String, ArrayList<Transaction>>> entrySet = tree.entrySet().iterator();
+
+        List<Transaction> allTransactions = new ArrayList<Transaction>();
+
+        while(entrySet.hasNext()){
+            Map.Entry<String, ArrayList<Transaction>> entry = entrySet.next();
+            temp = entry.getValue();
+            for(Transaction t: temp){
+                allTransactions.add(t);
+            }
+        }
+
+        return allTransactions;
+    }
+
+    @Override
+    public List<Transaction> findAllByUserByAmount(User user) {
+        List<Transaction> all = transactionRepository.findAllByUser(user);
+
+        TreeMap<Integer, ArrayList<Transaction>> tree = new TreeMap<Integer, ArrayList<Transaction>>();
+
+        ArrayList<Transaction> temp = new ArrayList<Transaction>();
+
+        for(Transaction t: all){
+            int i = t.getAmount();
+            if(tree.containsKey(i)){
+                temp = tree.get(i);
+                temp.add(t);
+                tree.put(i, temp);
+            }
+            else{
+                temp = new ArrayList<Transaction>();
+                temp.add(t);
+                tree.put(i, temp);
+            }
+        }
+
+        Iterator<Map.Entry<Integer, ArrayList<Transaction>>> entrySet = tree.entrySet().iterator();
+
+        List<Transaction> allTransactions = new ArrayList<Transaction>();
+
+        while(entrySet.hasNext()){
+            Map.Entry<Integer, ArrayList<Transaction>> entry = entrySet.next();
+            temp = entry.getValue();
+            for(Transaction t: temp){
+                allTransactions.add(0,t);
+            }
+        }
+
+        return allTransactions;
+    }
+
+    @Override
     public ArrayList<ArrayList<Object>> getPieChartData(User user) {
 
         //Create dictionary

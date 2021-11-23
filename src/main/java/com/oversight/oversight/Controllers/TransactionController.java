@@ -46,6 +46,38 @@ public class TransactionController {
         return "seeTransactions";
     }
 
+    @RequestMapping("/seeTransactions/Category")
+    public String homePageCat(Model model, HttpSession session){
+
+        //Get all transactions from logged in user
+        User loggedIn = (User) session.getAttribute("LoggedInUser");
+        List<Transaction> allTransactions = transactionService.findAllByUserByCategory(loggedIn);
+
+        // Add data to the model
+        model.addAttribute("transactions", allTransactions);
+
+        model.addAttribute("pieChartData", getPieChartData(loggedIn));
+        model.addAttribute("lineChartData", getLineChartData(loggedIn));
+
+        return "seeTransactions";
+    }
+
+    @RequestMapping("/seeTransactions/Amount")
+    public String homePageAmt(Model model, HttpSession session){
+
+        //Get all transactions from logged in user
+        User loggedIn = (User) session.getAttribute("LoggedInUser");
+        List<Transaction> allTransactions = transactionService.findAllByUserByAmount(loggedIn);
+
+        // Add data to the model
+        model.addAttribute("transactions", allTransactions);
+
+        model.addAttribute("pieChartData", getPieChartData(loggedIn));
+        model.addAttribute("lineChartData", getLineChartData(loggedIn));
+
+        return "seeTransactions";
+    }
+
     @RequestMapping(value="/addTransaction", method = RequestMethod.GET)
     public String addTransactionGET(Transaction transaction, User user){
         return "newTransaction";
