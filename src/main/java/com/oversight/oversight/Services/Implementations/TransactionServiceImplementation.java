@@ -7,6 +7,7 @@ import com.oversight.oversight.Services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.Month;
 import java.util.*;
 
@@ -91,6 +92,9 @@ public class TransactionServiceImplementation implements TransactionService {
         temp.add("spending"); //y axis
         chartData.add(temp); //add to chartData
 
+        //This is the current year
+        int year = LocalDate.now().getYear();
+
         //Initialize a Treemap to pool all transactions for each month into one value
         //I use a Treemap because it automatically sorts my keys, i.e. the months
         TreeMap<Month, Integer> map = new TreeMap<Month, Integer>();
@@ -102,13 +106,15 @@ public class TransactionServiceImplementation implements TransactionService {
         //Add each transaction to the empty list as a pair of month and amount
         for (Transaction t : transactions){
             Month m = t.getDate().getMonth();
-            int i = t.getAmount();
+            if(t.getDate().getYear() == year){
+                int i = t.getAmount();
 
-            if(map.containsKey(m)){
-                map.put(m, map.get(m)+i);
-            }
-            else{
-                map.put(m, i);
+                if(map.containsKey(m)){
+                    map.put(m, map.get(m)+i);
+                }
+                else{
+                    map.put(m, i);
+                }
             }
         }
 
