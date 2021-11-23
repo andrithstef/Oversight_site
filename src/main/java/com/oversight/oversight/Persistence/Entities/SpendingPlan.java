@@ -14,9 +14,7 @@ public class SpendingPlan {
     private float car;
     private float booze;
     private float electronics;
-
-    @ElementCollection
-    private ArrayList<Category> categories;
+    
     @OneToOne
     private User user;
 
