@@ -43,7 +43,39 @@ public class TransactionServiceImplementation implements TransactionService {
 
     @Override
     public List<Transaction> findAllByUser(User user) {
-        return transactionRepository.findAllByUser(user);
+        List<Transaction> all = transactionRepository.findAllByUser(user);
+
+        TreeMap<LocalDate, ArrayList<Transaction>> tree = new TreeMap<LocalDate, ArrayList<Transaction>>();
+
+        ArrayList<Transaction> temp = new ArrayList<Transaction>();
+
+        for(Transaction t: all){
+            LocalDate date = t.getDate();
+            if(tree.containsKey(date)){
+                temp = tree.get(date);
+                temp.add(t);
+                tree.put(date, temp);
+            }
+            else{
+                temp = new ArrayList<Transaction>();
+                temp.add(t);
+                tree.put(date, temp);
+            }
+        }
+
+        Iterator<Map.Entry<LocalDate, ArrayList<Transaction>>> entrySet = tree.entrySet().iterator();
+
+        List<Transaction> allTransactions = new ArrayList<Transaction>();
+
+        while(entrySet.hasNext()){
+            Map.Entry<LocalDate, ArrayList<Transaction>> entry = entrySet.next();
+            temp = entry.getValue();
+            for(Transaction t: temp){
+                allTransactions.add(0,t);
+            }
+        }
+
+        return allTransactions;
     }
 
     @Override
