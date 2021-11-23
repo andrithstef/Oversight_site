@@ -14,7 +14,7 @@ public enum Category {
     INVESTMENTS("Investments & Savings"),
     LEISURE("Leisure"),
     SHOPPING("Shopping & Services"),
-    MISC("Mmiscellaneous"),
+    MISC("Miscellaneous"),
     TRAVEL("Vacation and Travel");
 
 
