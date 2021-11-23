@@ -10,7 +10,7 @@ public enum Category {
     FOOD("Food"),
     HEALTH("health & Beauty"),
     HOME("Home"),
-    INSUREANCE("Insurance"),
+    INSURANCE("Insurance"),
     INVESTMENTS("Investments & Savings"),
     LEISURE("Leisure"),
     SHOPPING("Shopping & Services"),

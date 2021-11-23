@@ -50,7 +50,7 @@ public class UserController {
             //save user
             exists = userService.save(user);
             //will probably redirect to a new user/tutorial page
-            return "home";
+            return "tutorialPage";
         }
         //redirect to homepage
         return "userAlreadyExists";

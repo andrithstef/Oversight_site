@@ -1,6 +1,7 @@
 package com.oversight.oversight.Persistence.Entities;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 
 @Entity
 @Table(name="spendingplan")
@@ -13,7 +14,7 @@ public class SpendingPlan {
     private float car;
     private float booze;
     private float electronics;
-
+    
     @OneToOne
     private User user;
 
@@ -26,6 +27,7 @@ public class SpendingPlan {
         this.car = car;
         this.booze = booze;
         this.electronics = electronics;
+
     }
 
     public long getID() {
