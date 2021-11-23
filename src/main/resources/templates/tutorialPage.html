@@ -4,8 +4,25 @@
 <head>
     <meta charset="UTF-8">
     <title>Tutorial Page</title>
+    <link href="../static/css/test.css" th:href="@{/css/test.css}" rel="stylesheet" />
 </head>
 <body>
+<div style="padding-left:20px" class="header">
+    <a href="/seeTransactions" class="logo">Oversight</a>
+    <div style="padding-left:1390px">
+        <a href="/seeTransactions">See transactions</a>
+        <a href="/seeSpendingPlan">See spending plan</a>
+        <a href="/tutorialPage">Tutorial Page</a>
+        <div class="dropdown">
+            <a>My Account</a>
+            <div class="dropdown-content">
+                <a style="font-size: 12px" href="/logout">Log out</a>
+                <a style="font-size: 12px" href="/changePassword">Change password</a>
+                <a style="font-size: 12px" href="/deleteUser">Delete account</a>
+            </div>
+        </div>
+    </div>
+</div>
 <main>
     <section>
         <header>
@@ -19,7 +36,7 @@
     <a id="content"></a>
     <article>
         <header>
-            <h2>Tip number 1</h2>
+            <h2>How to manage your transactions</h2>
         </header>
         <p>
             When you have successfully logged in, you will be directed to the logged in page where you can select
@@ -38,16 +55,91 @@
                         <p class="title">Tip number 1</p>
                         <p class="subtitle">Logged In!</p>
                     </div>
-                    <img class="loggedInMynd" src="../images/loggedIn.jpg" alt="Logged In síðan" />
+                    <img class="tutorialMynd" src="../images/loggedIn.jpg" alt="Logged In síðan" />
                 </div>
             </div>
         </section>
+        <!--
         <figure>
-            <img class="loggedIn" src="../images/loggedIn.png" alt="Logged In síðan."
-                 title="Logged In síðan">
-            <figcaption>Logged In síðan</figcaption>
+            <img src="../images/loggedIn.png" alt="Logged In síða."
+                 title="Logged in síða.">
+            <figcaption>Logged In síða.</figcaption>
         </figure>
-
+        -->
+        <p>Select "See Transactions" to see graphical information on your spending habits, as well as add new spending data!</p>
+        <section class="hero is-info">
+            <div class="hero-body">
+                <div class="hero-container">
+                    <div>
+                        <p class="title"></p>
+                        <p class="subtitle">Here you can add spending data and view graphical information on spending habits!</p>
+                    </div>
+                    <img class="tutorialMynd" src="../images/seeTransactions1.png" alt="seeTransactions síðan" />
+                </div>
+            </div>
+        </section>
+        <p>To add a new transaction, simply click on the "Add a new transaction" button, select a category from the drop down menu,
+            input the amount and date of purchase, then finally click the "Add Transaction" button to add the transaction to the system.
+        </p>
+        <section class="hero is-info">
+            <div class="hero-body">
+                <div class="hero-container">
+                    <div>
+                        <p class="title"></p>
+                        <p class="subtitle">You can select from multiple categories to assign to your transaction!</p>
+                    </div>
+                    <img class="tutorialMynd" src="../images/selectCategory.png" alt="adding a transaction" />
+                </div>
+                <div class="hero-container">
+                    <div>
+                        <p class="title"></p>
+                        <p class="subtitle">The latest transaction has been added to your list of transactions!</p>
+                    </div>
+                    <img class="tutorialMynd" src="../images/successfulTransaction.png" alt="transaction successful" />
+                </div>
+            </div>
+        </section>
+        <p>If you feel you've made an error, you can then simply delete any transaction with a click of the delete button.</p>
+        <header>
+            <h2>How to manage your spending plan</h2>
+        </header>
+        <p>
+            Next, try clicking on the "See spending plan" button located in the top right of the screen between "See transactions" and "Tutorial Page".
+            If you do not already have a spending plan, try creating a new one by clicking on the "Create new spending plan" button.
+            Then simply input your estimated planned expenses per category and the website will display it visually for your convenience.
+        </p>
+        <section class="hero is-info">
+            <div class="hero-body">
+                <div class="hero-container">
+                    <div>
+                        <p class="title"></p>
+                        <p class="subtitle">Select "See spending plan" to navigate to the spending plan site!</p>
+                    </div>
+                    <img class="tutorialMynd" src="../images/seeSpendingPlan.png" alt="seeSpendingPlan page" />
+                </div>
+                <div class="hero-container">
+                    <div>
+                        <p class="title"></p>
+                        <p class="subtitle">Input your desired planned expenses per category</p>
+                    </div>
+                    <img class="tutorialMynd" src="../images/createSpendingPlan1.png" alt="createSpendingPlan page" />
+                </div>
+                <div class="hero-container">
+                    <div>
+                        <p class="title"></p>
+                        <p class="subtitle">Click "Create Spending Plan" at the bottom to finalize the spending plan.</p>
+                    </div>
+                    <img class="tutorialMynd" src="../images/createSpendingPlan2.png" alt="createSpendingPlan page" />
+                </div>
+                <div class="hero-container">
+                    <div>
+                        <p class="title"></p>
+                        <p class="subtitle">Congratulations, you have created your first spending plan!</p>
+                    </div>
+                    <img class="tutorialMynd" src="../images/mySpendingPlan.png" alt="seeSpendingPlan page" />
+                </div>
+            </div>
+        </section>
     </article>
 </main>
 
