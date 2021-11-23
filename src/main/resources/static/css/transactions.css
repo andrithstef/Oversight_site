@@ -68,3 +68,16 @@
     font-weight: bold;
     color: #009879;
 }
+
+.specialLink{
+    background-color: #009879;
+    color: white;
+    padding: 14px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.specialLink:hover {
+    background-color: #303245;
+}

@@ -8,7 +8,6 @@
     <link href="../static/css/main.css" th:href="@{/css/main.css}" rel="stylesheet" />
     <link href="../static/css/transactions.css" th:href="@{/css/transactions.css}" rel="stylesheet" />
 </head>
-</head>
 <body>
 <div style="padding-left:20px" class="header">
     <a href="/seeTransactions" class="logo">Oversight</a>
@@ -33,7 +32,7 @@
         <div th:case="*">
             <h2>Transactions</h2>
             <div class="addTrans">
-                <a href="/addTransaction">Add a new transaction</a>
+                <a href="/addTransaction" class="specialLink">Add a new transaction</a>
             </div>
             <table class="styled-table">
                 <thead>
@@ -49,7 +48,7 @@
                     <td th:text="${transaction.category.displayName}"></td>
                     <td th:text="${transaction.amount}"></td>
                     <td th:text="${transaction.date}"></td>
-                    <td><a th:href="@{/delete/{id}(id=${transaction.ID})}">Delete</a></td>
+                    <td> <a th:href="@{/delete/{id}(id=${transaction.ID})}" class="specialLink">Delete</a></td>
                 </tr>
                 </tbody>
             </table>
