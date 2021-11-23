@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -33,6 +34,9 @@ public class SpendingPlanController {
 
         // Add data to the model
         model.addAttribute("seespendingplan", spendingPlan);
+        if(spendingPlan != null) {
+            model.addAttribute("pieChartData", getPieChartData(loggedIn));
+        }
         return "seeSpendingPlan";
     }
 
@@ -53,9 +57,18 @@ public class SpendingPlanController {
         SpendingPlan spendingPlanExists = spendingPlanService.findByUser(loggedIn);
         //Checks if the spending plan already exists
         if (spendingPlanExists == null) {
+            if (spendingPlan.getFood() < 0 || spendingPlan.getChildren() < 0 || spendingPlan.getCars_transportation() < 0 ||
+                    spendingPlan.getFines_fees() < 0 || spendingPlan.getEducation() < 0 || spendingPlan.getHealth_beauty() < 0 ||
+                    spendingPlan.getHome() < 0 || spendingPlan.getInsurance() < 0 || spendingPlan.getInvestments_savings() < 0 ||
+                    spendingPlan.getLeisure() < 0 || spendingPlan.getVacation_travel() < 0 || spendingPlan.getShopping_services() < 0 ||
+                    spendingPlan.getUncategorized() < 0) {
+                return "spendingPlanNotNegative";
+            }
+            else {
                 spendingPlan.setUser(loggedIn);
                 spendingPlanService.save(spendingPlan);
                 return "redirect:/seeSpendingPlan";
+            }
         }
         return "spendingPlanAlreadyExists";
     }
@@ -65,5 +78,9 @@ public class SpendingPlanController {
         SpendingPlan spendingPlanToDelete = spendingPlanService.findByID(id);
         spendingPlanService.delete(spendingPlanToDelete);
         return "redirect:/seeSpendingPlan";
+    }
+
+    private ArrayList<ArrayList<Object>> getPieChartData(User user){
+        return spendingPlanService.getPieChartData(user);
     }
 }

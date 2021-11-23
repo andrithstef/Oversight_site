@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Create a Spending Plan</title>
-    <link rel="stylesheet" href="spendingPlan.css">
+    <link href="../static/css/header.css" th:href="@{/css/header.css}" rel="stylesheet" />
+    <link href="../static/css/main.css" th:href="@{/css/main.css}" rel="stylesheet" />
 </head>
 <body>
 <div style="padding-left:20px" class="header">
@@ -26,24 +27,99 @@
     <div class="title" style="padding-left: 6.4vh;">Create Your Spending Plan</div>
     <div class="subtitle" style="padding-left: 12.8vh;">Values need to add up to 100</div>
     <form action="#" th:action="@{/createSpendingPlan}" th:object="${spendingplan}" method="post">
-        <div class="input-container ic1">
-            <input type="text" class="input" th:field="*{food}" id="food" placeholder="Food">
-            <span th:if="${#fields.hasErrors('food')}" th:errors="*{food}"></span>
-            <div class="cut"></div>
-        </div>
-        <div class="input-container ic2">
-            <input type="text" class="input" th:field="*{car}" id="car" placeholder="Car">
-            <span th:if="${#fields.hasErrors('car')}" th:errors="*{car}"></span>
-            <div class="cut"></div>
-        </div>
-        <div class="input-container ic3">
-            <input type="text" class="input" th:field="*{booze}" id="booze" placeholder="Booze">
-            <span th:if="${#fields.hasErrors('booze')}" th:errors="*{booze}"></span>
-            <div class="cut"></div>
+        <div style="color: white">
+            <p>Cars & Transportation</p>
         </div>
         <div class="input-container ic4">
-            <input type="text" class="input" th:field="*{electronics}" id="electronics" placeholder="Electronics">
-            <span th:if="${#fields.hasErrors('electronics')}" th:errors="*{electronics}"></span>
+            <input type="text" class="input" th:field="*{cars_transportation}" id="cars_transportation">
+            <span th:if="${#fields.hasErrors('cars_transportation')}" th:errors="*{cars_transportation}"></span>
+            <div class="cut"></div>
+        </div>
+        <div style="color: white">
+            <p>Children</p>
+        </div>
+        <div class="input-container ic4">
+            <input type="text" class="input" th:field="*{children}" id="children">
+            <span th:if="${#fields.hasErrors('children')}" th:errors="*{children}"></span>
+            <div class="cut"></div>
+        </div>
+        <div style="color: white">
+            <p>Education</p>
+        </div>
+        <div class="input-container ic4">
+            <input type="text" class="input" th:field="*{education}" id="education">
+            <span th:if="${#fields.hasErrors('education')}" th:errors="*{education}"></span>
+            <div class="cut"></div>
+        </div>
+        <div style="color: white">
+            <p>Fines & Fees</p>
+        </div>
+        <div class="input-container ic4">
+            <input type="text" class="input" th:field="*{fines_fees}" id="fines_fees">
+            <span th:if="${#fields.hasErrors('fines_fees')}" th:errors="*{fines_fees}"></span>
+        </div>
+        <div style="color: white">
+            <p>Food</p>
+        </div>
+        <div class="input-container ic4">
+            <input type="text" class="input" th:field="*{food}" id="food">
+            <span th:if="${#fields.hasErrors('food')}" th:errors="*{food}"></span>
+        </div>
+        <div style="color: white">
+            <p>Health & Safety</p>
+        </div>
+        <div class="input-container ic4">
+            <input type="text" class="input" th:field="*{health_beauty}" id="health_beauty">
+            <span th:if="${#fields.hasErrors('health_beauty')}" th:errors="*{health_beauty}"></span>
+        </div>
+        <div style="color: white">
+            <p>Home</p>
+        </div>
+        <div class="input-container ic4">
+            <input type="text" class="input" th:field="*{home}" id="home">
+            <span th:if="${#fields.hasErrors('home')}" th:errors="*{home}"></span>
+        </div>
+        <div style="color: white">
+            <p>Insurance</p>
+        </div>
+        <div class="input-container ic4">
+            <input type="text" class="input" th:field="*{insurance}" id="insurance">
+            <span th:if="${#fields.hasErrors('insurance')}" th:errors="*{insurance}"></span>
+        </div>
+        <div style="color: white">
+            <p>Investments & Savings</p>
+        </div>
+        <div class="input-container ic4">
+            <input type="text" class="input" th:field="*{investments_savings}" id="investments_savings">
+            <span th:if="${#fields.hasErrors('investments_savings')}" th:errors="*{investments_savings}"></span>
+        </div>
+        <div style="color: white">
+            <p>Leisure Time</p>
+        </div>
+        <div class="input-container ic4">
+            <input type="text" class="input" th:field="*{leisure}" id="leisure">
+            <span th:if="${#fields.hasErrors('leisure')}" th:errors="*{leisure}"></span>
+        </div>
+        <div style="color: white">
+            <p>Shopping & Services</p>
+        </div>
+        <div class="input-container ic4">
+            <input type="text" class="input" th:field="*{shopping_services}" id="shopping_services">
+            <span th:if="${#fields.hasErrors('shopping_services')}" th:errors="*{shopping_services}"></span>
+        </div>
+        <div style="color: white">
+            <p>Uncategorized Expenses / Other</p>
+        </div>
+        <div class="input-container ic4">
+            <input type="text" class="input" th:field="*{uncategorized}" id="uncategorized">
+            <span th:if="${#fields.hasErrors('uncategorized')}" th:errors="*{uncategorized}"></span>
+        </div>
+        <div style="color: white">
+            <p>Vacation & Travel</p>
+        </div>
+        <div class="input-container ic4">
+            <input type="text" class="input" th:field="*{vacation_travel}" id="vacation_travel">
+            <span th:if="${#fields.hasErrors('vacation_travel')}" th:errors="*{vacation_travel}"></span>
         </div>
         <input type="submit" class="submit" value="Create Spending Plan">
     </form>
