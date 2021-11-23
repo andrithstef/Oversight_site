@@ -6,6 +6,7 @@
     <title>Create a Spending Plan</title>
     <link href="../static/css/header.css" th:href="@{/css/header.css}" rel="stylesheet" />
     <link href="../static/css/main.css" th:href="@{/css/main.css}" rel="stylesheet" />
+    <link href="../static/css/spendingPlan.css" th:href="@{/css/spendingPlan.css}" rel="stylesheet" />
 </head>
 <body>
 <div style="padding-left:20px" class="header">
@@ -13,6 +14,7 @@
     <div style="padding-left:1390px">
         <a href="/seeTransactions">See transactions</a>
         <a href="/seeSpendingPlan">See spending plan</a>
+        <a href="/tutorialPage">Tutorial Page</a>
         <div class="dropdown">
             <a>My Account</a>
             <div class="dropdown-content">
@@ -25,7 +27,6 @@
 </div>
 <div class="form" style="margin: 10vh auto">
     <div class="title" style="padding-left: 6.4vh;">Create Your Spending Plan</div>
-    <div class="subtitle" style="padding-left: 12.8vh;">Values need to add up to 100</div>
     <form action="#" th:action="@{/createSpendingPlan}" th:object="${spendingplan}" method="post">
         <div style="color: white">
             <p>Cars & Transportation</p>
