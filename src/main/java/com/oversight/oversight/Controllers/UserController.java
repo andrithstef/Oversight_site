@@ -28,6 +28,12 @@ public class UserController {
         return "home";
     }
 
+    //This is the page you go to when opening the tutorial Page
+    @RequestMapping("/tutorialPage")
+    public String tutorialPage(Model model, HttpSession session){
+        return "tutorialPage";
+    }
+
     //Redirect us to user creation page
     @RequestMapping(value = "/createUser", method = RequestMethod.GET)
     public String createuserGET(User user){
