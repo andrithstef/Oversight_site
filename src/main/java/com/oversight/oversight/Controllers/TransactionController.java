@@ -88,6 +88,15 @@ public class TransactionController {
         if(result.hasErrors()){
             return "newTransaction";
         }
+
+        if(transaction.getDate() == null){
+            return "insertDate";
+        }
+
+        if(transaction.getAmount() < 0){
+            return "negativeAmount";
+        }
+
         //Get logged in user, and connect to transactions
         User loggedIn = (User) session.getAttribute("LoggedInUser");
         transaction.setUser(loggedIn);

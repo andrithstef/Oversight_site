@@ -1,11 +1,11 @@
 package com.oversight.oversight.Persistence.Entities;
 
-import org.apache.tomcat.jni.Local;
+import com.sun.istack.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 @Table(name="transactions")

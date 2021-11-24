@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="https://thymeleaf.org">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Add a new Transaction</title>
+  <link href="../static/css/header.css" th:href="@{/css/header.css}" rel="stylesheet" />
+  <link href="../static/css/main.css" th:href="@{/css/main.css}" rel="stylesheet" />
+  <link href="../static/css/transactions.css" th:href="@{/css/transactions.css}" rel="stylesheet" />
+</head>
+<body>
+<div style="padding-left:20px" class="header">
+  <a href="/seeTransactions" class="logo">Oversight</a>
+  <div style="padding-left:1390px">
+    <a href="/seeTransactions">See transactions</a>
+    <a href="/seeSpendingPlan">See spending plan</a>
+    <div class="dropdown">
+      <a>My Account</a>
+      <div class="dropdown-content">
+        <a style="font-size: 12px" href="/logout">Log out</a>
+        <a style="font-size: 12px" href="/changePassword">Change password</a>
+        <a style="font-size: 12px" href="/deleteUser">Delete account</a>
+        <a style="font-size: 12px" href="/tutorialPage">Help</a>
+      </div>
+    </div>
+  </div>
+</div>
+<form class="newtra" action="#" th:action="@{/addTransaction}" th:object="${transaction}" method="post">
+  <div class="select form-group">
+    Category
+    <select class="form-control" id="category" th:field="*{category}">
+      <option th:each="category : ${T(com.oversight.oversight.Persistence.Entities.Category).values()}"
+              th:value="${category}"
+              th:text="${category.displayName}"
+      ></option>
+    </select>
+    <span th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></span>
+  </div>
+  <label for="amount">Amount</label>
+  <input type="text" th:field="*{amount}" id="amount" placeholder="Amount">
+  <span th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}"></span>
+  <input type="date" th:field="*{date}" id="date" placeholder="Date">
+  <span th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></span>
+  <input type="submit" value="Add Transaction">
+</form>
+<div class="center-screen">Please select a date</div>
+</body>
+</html>
