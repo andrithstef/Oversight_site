@@ -55,9 +55,11 @@ public class UserController {
             //the user does not exist
             //save user
             exists = userService.save(user);
+
+            //Update model and session
             session.setAttribute("LoggedInUser", exists);
             model.addAttribute("LoggedInUser", exists);
-            //will probably redirect to a new user/tutorial page
+
             return "tutorialPage";
         }
         //redirect to homepage
