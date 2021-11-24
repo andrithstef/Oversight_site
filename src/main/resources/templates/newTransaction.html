@@ -5,7 +5,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Add a new Transaction</title>
-  <link href="../static/css/logIn.css" th:href="@{/css/logIn.css}" rel="stylesheet" />
+  <!--<link href="../static/css/logIn.css" th:href="@{/css/logIn.css}" rel="stylesheet" />-->
   <link href="../static/css/header.css" th:href="@{/css/header.css}" rel="stylesheet" />
   <link href="../static/css/main.css" th:href="@{/css/main.css}" rel="stylesheet" />
   <link href="../static/css/transactions.css" th:href="@{/css/transactions.css}" rel="stylesheet" />
@@ -28,33 +28,44 @@
   </div>
 </div>
 
-<div class="form" style="margin: 10vh auto">
-  <div class="title" style="text-align: center"></div>
-  <form action="#" th:action="@{/addTransaction}" th:object="${transaction}" method="post">
-    <div class="select form-group">
-      <select class="form-control" id="category" th:field="*{category}">
-        <option th:each="category : ${T(com.oversight.oversight.Persistence.Entities.Category).values()}"
-                th:value="${category}"
-                th:text="${category.displayName}"
-        ></option>
-      </select>
-      <span th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></span>
-    </div>
+<div class="form-container">
+  <form class="form" style="margin: 10vh auto" action="#" th:action="@{/addTransaction}" th:object="${transaction}" method="post">
 
-    <div class="input-container ic1">
-      <input type="text" th:field="*{amount}" id="amount" placeholder="Amount">
-      <span th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}"></span>
-      <div class="cut"></div>
-    </div>
+    <select class="form-element" id="category" th:field="*{category}">
+      <option th:each="category : ${T(com.oversight.oversight.Persistence.Entities.Category).values()}"
+              th:value="${category}"
+              th:text="${category.displayName}">
+      </option>
+    </select>
+    <span th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></span>
 
-    <div class="input-container ic1">
-      <input type="date" th:field="*{date}" id="date" placeholder="Date">
-      <span th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></span>
-      <div class="cut"></div>
-    </div>
+
+
+    <input class="form-element" type="text" th:field="*{amount}" id="amount" placeholder="Amount">
+    <span th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}"></span>
+    <div class="cut"></div>
+
+
+
+    <input class="form-element" type="date" th:field="*{date}" id="date" placeholder="Date">
+    <span th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></span>
+    <div class="cut"></div>
+
     <input type="submit" class="submit" value="Add transaction">
   </form>
 </div>
 
 </body>
+<script>
+  var date = new Date();
+  var year = date.getFullYear();
+  var month = date.getMonth() + 1;
+  var day = String(date.getDate()).padStart(2,'0');
+  var fullDate = year + '-' + month + '-' + day;
+  document.getElementById("date").value = fullDate;
+
+  //document.getElementById('date-picker').value = new Date().toDateInputValue();
+</script>
+
+
 </html>
