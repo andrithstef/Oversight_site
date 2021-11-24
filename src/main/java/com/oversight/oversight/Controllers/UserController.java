@@ -85,7 +85,7 @@ public class UserController {
             if(hashedPassword.equals(exists.getPassword())) {
                 session.setAttribute("LoggedInUser", exists);
                 model.addAttribute("LoggedInUser", exists);
-                return "/loggedIn";
+                return "redirect:/seeTransactions";
             }
             return "wrongPassword";
         }
