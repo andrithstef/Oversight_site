@@ -25,6 +25,10 @@
     float: left;
 }
 
+.left-element {
+    display: inline-block;
+    float: left;
+}
 
 .addTrans{
     padding-left: 20px;

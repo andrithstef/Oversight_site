@@ -26,20 +26,38 @@
         </div>
     </div>
 </div>
-<div class="exist" th:switch="${seespendingplan}">
-    <h2 th:case="null">No Spending Plan yet!</h2>
-    <div th:case="*">
-            </thead>
-            <tbody>
-            <tr th:each="spendingplan : ${seespendingplan}">
-                <td><a th:href="@{/deletespendingplan/{id}(id=${spendingplan.ID})}">Delete</a></td>
-            </tr>
-            </tbody>
-        </table>
+
+<div th:switch="${seespendingplan}">
+    <div class="container" th:case="null">
+        <div class="left-element">
+            <div><a href="/createSpendingPlan">Create spending plan</a></div>
+        </div>
+        <div class="right-element">
+            <div class="exist">
+                <h2>No Spending Plan yet!</h2>
+            </div>
+        </div>
     </div>
-    <a href="/createSpendingPlan">Create spending plan</a>
-    <p><a href="/loggedIn">Back to homepage</a></p>
+    <div class="container" th:case="*">
+        <div class="left-element">
+            <div>
+                <tr th:each="spendingplan : ${seespendingplan}">
+                    <td><a th:href="@{/deletespendingplan/{id}(id=${spendingplan.ID})}">Delete</a></td>
+                </tr>
+            </div>
+        </div>
+        <div class="right-element">
+            <div class="exist">
+                <div>
+                    <div class = "center-screen" href="../CSS/spendingPlan.css" id="chart1_div"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+
+
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript" th:inline="javascript">
 
@@ -67,7 +85,7 @@
             'titleTextStyle': {color: 'White', fontName: 'Arial', fontSize: 40,},
             'legend': {textStyle: {color: 'white'}},
             'width': 1000,
-            'height': 800,
+            'height': 1000,
             'backgroundColor': '#111111'
         };
 
@@ -76,7 +94,5 @@
         chart.draw(data, options);
     }
 </script>
-<div class = "center-screen" href="../CSS/spendingPlan.css" id="chart1_div"></div>
-
 </body>
 </html>
