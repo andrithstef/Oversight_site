@@ -29,16 +29,6 @@ public class SpendingPlanServiceImplementation implements SpendingPlanService {
     }
 
     @Override
-    public List<SpendingPlan> findAll() {
-        return spendingPlanRepository.findAll();
-    }
-
-    @Override
-    public SpendingPlan findByID(long id) {
-        return spendingPlanRepository.findByID(id);
-    }
-
-    @Override
     public SpendingPlan findByUser(User user) {
         return spendingPlanRepository.findByUser(user);
     }
@@ -82,15 +72,9 @@ public class SpendingPlanServiceImplementation implements SpendingPlanService {
 
         return chartData;
     }
-    /*
-    @Override
-    public void changeCategory(String category, float fraction) {
-
-    }
 
     @Override
-    public float getCategoryPercentage(String category) {
-        return 0;
+    public SpendingPlan findByID(long id) {
+        return spendingPlanRepository.findByID(id);
     }
-     */
 }

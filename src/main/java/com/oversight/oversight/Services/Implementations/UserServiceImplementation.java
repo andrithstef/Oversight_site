@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.List;
 
 @Service
 public class UserServiceImplementation implements UserService {
@@ -31,32 +30,8 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public List<User> findAll() {
-        return userRepository.findAll();
-    }
-
-    @Override
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
-    }
-
-    @Override
-    public User findByID(long id) {
-        return userRepository.findByID(id);
-    }
-
-    @Override
-    public User login(User user) {
-        //check if user exists
-        User exists= findByUsername(user.getUsername());
-        if(exists != null){
-            //User exists, return user
-            if(exists.getPassword().equals(user.getPassword())){
-                return exists;
-            }
-        }
-        //User does not exist, return null
-        return null;
     }
 
     @Override
@@ -85,5 +60,10 @@ public class UserServiceImplementation implements UserService {
             e.printStackTrace();
         }
         return generatedPassword;
+    }
+
+    @Override
+    public User findByID(long id) {
+        return userRepository.findByID(id);
     }
 }

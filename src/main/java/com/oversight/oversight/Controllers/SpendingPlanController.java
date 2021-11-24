@@ -1,7 +1,6 @@
 package com.oversight.oversight.Controllers;
 
 import com.oversight.oversight.Persistence.Entities.SpendingPlan;
-import com.oversight.oversight.Persistence.Entities.Transaction;
 import com.oversight.oversight.Persistence.Entities.User;
 import com.oversight.oversight.Services.SpendingPlanService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 public class SpendingPlanController {
@@ -26,6 +24,7 @@ public class SpendingPlanController {
         this.spendingPlanService = spendingPlanService;
     }
 
+    //
     @RequestMapping("/seeSpendingPlan")
     public String homePage(Model model, HttpSession session){
 
@@ -34,12 +33,14 @@ public class SpendingPlanController {
 
         // Add data to the model
         model.addAttribute("seespendingplan", spendingPlan);
+        //If no spending plan present, i.e. not created, do not draw pie chart
         if(spendingPlan != null) {
             model.addAttribute("pieChartData", getPieChartData(loggedIn));
         }
         return "seeSpendingPlan";
     }
 
+    //Redirects the user to the page where he can create the spending plan
     @RequestMapping(value = "/createSpendingPlan", method = RequestMethod.GET)
     public String createSpendingPlanGET(Model model){
         model.addAttribute("spendingplan", new SpendingPlan());
@@ -57,6 +58,7 @@ public class SpendingPlanController {
         SpendingPlan spendingPlanExists = spendingPlanService.findByUser(loggedIn);
         //Checks if the spending plan already exists
         if (spendingPlanExists == null) {
+            //Checks if any values in the spending plan are negative
             if (spendingPlan.getFood() < 0 || spendingPlan.getChildren() < 0 || spendingPlan.getCars_transportation() < 0 ||
                     spendingPlan.getFines_fees() < 0 || spendingPlan.getEducation() < 0 || spendingPlan.getHealth_beauty() < 0 ||
                     spendingPlan.getHome() < 0 || spendingPlan.getInsurance() < 0 || spendingPlan.getInvestments_savings() < 0 ||
@@ -79,7 +81,7 @@ public class SpendingPlanController {
         spendingPlanService.delete(spendingPlanToDelete);
         return "redirect:/seeSpendingPlan";
     }
-
+    //This will display the spending plan as a piechart
     private ArrayList<ArrayList<Object>> getPieChartData(User user){
         return spendingPlanService.getPieChartData(user);
     }

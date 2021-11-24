@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
-import java.time.LocalDate;
-import java.time.Year;
 import java.util.ArrayList;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +28,7 @@ public class TransactionController {
 
     }
 
+    //Redirects the user to see his transactions
     @RequestMapping("/seeTransactions")
     public String homePage(Model model, HttpSession session){
 
@@ -46,6 +45,7 @@ public class TransactionController {
         return "seeTransactions";
     }
 
+    //See transactions sorted by category
     @RequestMapping("/seeTransactions/Category")
     public String homePageCat(Model model, HttpSession session){
 
@@ -62,6 +62,7 @@ public class TransactionController {
         return "seeTransactions";
     }
 
+    //See transactions sorted by amount
     @RequestMapping("/seeTransactions/Amount")
     public String homePageAmt(Model model, HttpSession session){
 
@@ -78,6 +79,7 @@ public class TransactionController {
         return "seeTransactions";
     }
 
+    //Redirects the user to new transaction page
     @RequestMapping(value="/addTransaction", method = RequestMethod.GET)
     public String addTransactionGET(Transaction transaction, User user){
         return "newTransaction";

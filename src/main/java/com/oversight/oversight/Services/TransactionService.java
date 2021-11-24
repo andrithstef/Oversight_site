@@ -7,13 +7,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface TransactionService {
-    Transaction findByID(long ID);
-    List<Transaction> findAll();
     Transaction save(Transaction transaction);
     void delete(Transaction transaction);
+
     List<Transaction> findAllByUser(User user);
     List<Transaction> findAllByUserByCategory(User user);
     List<Transaction> findAllByUserByAmount(User user);
+
     ArrayList<ArrayList<Object>> getPieChartData(User user);
     ArrayList<ArrayList<Object>> getLineChartData(User user);
+
+    Transaction findByID(long ID);
 }

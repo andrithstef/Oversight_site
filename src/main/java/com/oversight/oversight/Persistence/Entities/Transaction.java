@@ -1,10 +1,7 @@
 package com.oversight.oversight.Persistence.Entities;
 
-import com.sun.istack.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
-import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 @Entity

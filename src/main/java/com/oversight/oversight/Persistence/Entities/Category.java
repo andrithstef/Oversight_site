@@ -1,7 +1,5 @@
 package com.oversight.oversight.Persistence.Entities;
 
-import javax.lang.model.element.Element;
-
 public enum Category {
     CARS("Cars & transportation"),
     CHILDREN("Children"),

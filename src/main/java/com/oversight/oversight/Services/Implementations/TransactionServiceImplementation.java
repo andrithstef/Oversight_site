@@ -21,15 +21,6 @@ public class TransactionServiceImplementation implements TransactionService {
     }
 
 
-    @Override
-    public Transaction findByID(long ID) {
-        return transactionRepository.findByID(ID);
-    }
-
-    @Override
-    public List<Transaction> findAll() {
-        return transactionRepository.findAll();
-    }
 
     @Override
     public Transaction save(Transaction transaction) {
@@ -234,5 +225,10 @@ public class TransactionServiceImplementation implements TransactionService {
             chartData.add(temp);
         }
         return chartData;
+    }
+
+    @Override
+    public Transaction findByID(long ID) {
+        return transactionRepository.findByID(ID);
     }
 }
