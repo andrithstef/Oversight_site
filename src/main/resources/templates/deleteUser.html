@@ -7,6 +7,7 @@
     <title>Oversight</title>
     <link href="../static/css/header.css" th:href="@{/css/header.css}" rel="stylesheet" />
     <link href="../static/css/main.css" th:href="@{/css/main.css}" rel="stylesheet" />
+    <link href="../static/css/logIn.css" th:href="@{/css/logIn.css}" rel="stylesheet" />
 </head>
 <body>
 <div style="padding-left:20px" class="header">
@@ -25,12 +26,19 @@
         </div>
     </div>
 </div>
-<form class="delete" action="#" th:action="@{/deleteUser}" th:object="${user}" method="post">
-    <h2>Enter your password</h2>
-    <label for="password">Password</label>
-    <input type="password" th:field="*{password}" id="password" placeholder="Password">
-    <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
-    <input type="submit" value="Delete user">
-</form>
+
+
+<div class="form-2" style="margin: 10vh auto">
+    <div class="title-2" style="padding-left: 60px;">Delete User</div>
+    <form action="#" th:action="@{/deleteUser}" th:object="${user}" method="post">
+        <div class="input-container ic1">
+            <input type="text" class="input" th:field="*{password}" id="username" placeholder="Password">
+            <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+            <div class="cut"></div>
+        </div>
+        <input type="submit" class="submit" value="Delete User">
+    </form>
+</div>
+
 </body>
 </html>
