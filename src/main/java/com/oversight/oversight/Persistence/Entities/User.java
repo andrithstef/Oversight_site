@@ -17,7 +17,7 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = false)
     private List<Transaction> transactions = new ArrayList<>();
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = false)
+    @OneToOne(mappedBy = "user", orphanRemoval = true)
     private SpendingPlan spendingPlan;
 
     public User() {

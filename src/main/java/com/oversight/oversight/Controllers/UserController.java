@@ -124,6 +124,7 @@ public class UserController {
         if (loggedIn.getPassword().equals(hashedPassword)){
             //The password is correct
             session.setAttribute("LoggedInUser", null);
+            loggedIn.setSpendingPlan(null);
             userService.delete(loggedIn);
             return "redirect:/";
         }
