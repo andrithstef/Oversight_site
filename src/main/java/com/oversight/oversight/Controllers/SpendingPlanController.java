@@ -73,7 +73,7 @@ public class SpendingPlanController {
         return "spendingPlanAlreadyExists";
     }
     //Deletes the spending plan
-    @RequestMapping(value="/deletespendingplan/{id}", method = RequestMethod.GET)
+    @RequestMapping(value="/deleteSpendingPlan/{id}", method = RequestMethod.GET)
     public String deleteSpendingPlan(@PathVariable("id") long id, Model model){
         SpendingPlan spendingPlanToDelete = spendingPlanService.findByID(id);
         spendingPlanService.delete(spendingPlanToDelete);

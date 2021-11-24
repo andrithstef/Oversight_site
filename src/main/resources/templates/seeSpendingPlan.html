@@ -7,6 +7,8 @@
     <link href="../static/css/spendingPlan.css" th:href="@{/css/spendingPlan.css}" rel="stylesheet" />
     <link href="../static/css/header.css" th:href="@{/css/header.css}" rel="stylesheet" />
     <link href="../static/css/main.css" th:href="@{/css/main.css}" rel="stylesheet" />
+    <link href="../static/css/transactions.css" th:href="@{/css/transactions.css}" rel="stylesheet" />
+
 
 </head>
 <body>
@@ -29,28 +31,22 @@
 
 <div th:switch="${seespendingplan}">
     <div class="container" th:case="null">
-        <div class="left-element">
-            <div><a href="/createSpendingPlan">Create spending plan</a></div>
-        </div>
         <div class="right-element">
             <div class="exist">
                 <h2>No Spending Plan yet!</h2>
+                <a href="/createSpendingPlan" class="specialLink">Press here to create a spending plan</a>
             </div>
         </div>
     </div>
-    <div class="container" th:case="*">
-        <div class="left-element">
-            <div>
+    <div th:case="*">
+        <div class="container">
+            <div class="left-element">
                 <tr th:each="spendingplan : ${seespendingplan}">
-                    <td><a th:href="@{/deletespendingplan/{id}(id=${spendingplan.ID})}">Delete</a></td>
+                    <a th:href="@{/deleteSpendingPlan/{id}(id=${spendingplan.ID})}" class="specialLink">Delete spending plan</a>
                 </tr>
             </div>
-        </div>
-        <div class="right-element">
-            <div class="exist">
-                <div>
-                    <div class = "center-screen" href="../CSS/spendingPlan.css" id="chart1_div"></div>
-                </div>
+            <div class="right-element" style="padding-left: 100px">
+                <div class = "center-screen" href="../CSS/spendingPlan.css" id="chart1_div"></div>
             </div>
         </div>
     </div>
@@ -84,8 +80,8 @@
             'title': 'Your Spending Plan',
             'titleTextStyle': {color: 'White', fontName: 'Arial', fontSize: 40,},
             'legend': {textStyle: {color: 'white'}},
-            'width': 1000,
-            'height': 1000,
+            'width': 1200,
+            'height': 1200,
             'backgroundColor': '#111111'
         };
 

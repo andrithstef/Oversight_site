@@ -1,9 +1,16 @@
 .center-screen {
     display: grid;
+    align-items: center;
+    text-align: center;
+    min-height: 0vh;
+}
+
+.center-screen-2 {
+    display: grid;
     justify-content: center;
     align-items: center;
     text-align: center;
-    min-height: 100vh;
+    min-height: 0vh;
 }
 
 
