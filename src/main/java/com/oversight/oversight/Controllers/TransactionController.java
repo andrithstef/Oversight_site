@@ -90,7 +90,7 @@ public class TransactionController {
         }
 
         if(transaction.getDate() == null){
-            return "insertDate";
+            return "selectDate";
         }
 
         if(transaction.getAmount() < 0){
