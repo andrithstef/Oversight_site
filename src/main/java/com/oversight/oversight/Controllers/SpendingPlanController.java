@@ -28,6 +28,7 @@ public class SpendingPlanController {
     @RequestMapping("/seeSpendingPlan")
     public String homePage(Model model, HttpSession session){
 
+        //Get the logged in user's spending plan
         User loggedIn = (User) session.getAttribute("LoggedInUser");
         SpendingPlan spendingPlan = spendingPlanService.findByUser(loggedIn);
 

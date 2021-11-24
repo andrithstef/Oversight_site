@@ -34,8 +34,12 @@ public class TransactionServiceImplementation implements TransactionService {
 
     @Override
     public List<Transaction> findAllByUser(User user) {
+        //get all transactions
         List<Transaction> all = transactionRepository.findAllByUser(user);
 
+
+        //put them in a tree, this sorts them
+        //Here we sort by date
         TreeMap<LocalDate, ArrayList<Transaction>> tree = new TreeMap<LocalDate, ArrayList<Transaction>>();
 
         ArrayList<Transaction> temp = new ArrayList<Transaction>();
@@ -54,6 +58,7 @@ public class TransactionServiceImplementation implements TransactionService {
             }
         }
 
+        //Get all from tree and put into list
         Iterator<Map.Entry<LocalDate, ArrayList<Transaction>>> entrySet = tree.entrySet().iterator();
 
         List<Transaction> allTransactions = new ArrayList<Transaction>();
@@ -71,6 +76,7 @@ public class TransactionServiceImplementation implements TransactionService {
 
     @Override
     public List<Transaction> findAllByUserByCategory(User user) {
+        //The same as before but here we sort by category
         List<Transaction> all = transactionRepository.findAllByUser(user);
 
         TreeMap<String, ArrayList<Transaction>> tree = new TreeMap<String, ArrayList<Transaction>>();
@@ -108,6 +114,7 @@ public class TransactionServiceImplementation implements TransactionService {
 
     @Override
     public List<Transaction> findAllByUserByAmount(User user) {
+        //Same but sort by amount
         List<Transaction> all = transactionRepository.findAllByUser(user);
 
         TreeMap<Integer, ArrayList<Transaction>> tree = new TreeMap<Integer, ArrayList<Transaction>>();
