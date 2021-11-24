@@ -39,8 +39,8 @@ public class TransactionController {
         // Add data to the model
         model.addAttribute("transactions", allTransactions);
 
-        model.addAttribute("pieChartData", getPieChartData(loggedIn));
-        model.addAttribute("lineChartData", getLineChartData(loggedIn));
+        model.addAttribute("pieChartData", transactionService.getPieChartData(loggedIn));
+        model.addAttribute("lineChartData", transactionService.getLineChartData(loggedIn));
 
         return "seeTransactions";
     }
@@ -56,8 +56,8 @@ public class TransactionController {
         // Add data to the model
         model.addAttribute("transactions", allTransactions);
 
-        model.addAttribute("pieChartData", getPieChartData(loggedIn));
-        model.addAttribute("lineChartData", getLineChartData(loggedIn));
+        model.addAttribute("pieChartData", transactionService.getPieChartData(loggedIn));
+        model.addAttribute("lineChartData", transactionService.getLineChartData(loggedIn));
 
         return "seeTransactions";
     }
@@ -73,8 +73,8 @@ public class TransactionController {
         // Add data to the model
         model.addAttribute("transactions", allTransactions);
 
-        model.addAttribute("pieChartData", getPieChartData(loggedIn));
-        model.addAttribute("lineChartData", getLineChartData(loggedIn));
+        model.addAttribute("pieChartData", transactionService.getPieChartData(loggedIn));
+        model.addAttribute("lineChartData", transactionService.getLineChartData(loggedIn));
 
         return "seeTransactions";
     }
@@ -120,11 +120,5 @@ public class TransactionController {
         return "redirect:/seeTransactions";
     }
 
-    private ArrayList<ArrayList<Object>> getPieChartData(User user){
-        return transactionService.getPieChartData(user);
-    }
-    private ArrayList<ArrayList<Object>> getLineChartData(User user){
-        return transactionService.getLineChartData(user);
-    }
 
 }

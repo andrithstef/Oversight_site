@@ -36,7 +36,7 @@ public class SpendingPlanController {
         model.addAttribute("seespendingplan", spendingPlan);
         //If no spending plan present, i.e. not created, do not draw pie chart
         if(spendingPlan != null) {
-            model.addAttribute("pieChartData", getPieChartData(loggedIn));
+            model.addAttribute("pieChartData", spendingPlanService.getPieChartData(loggedIn));
         }
         return "seeSpendingPlan";
     }
@@ -82,8 +82,5 @@ public class SpendingPlanController {
         spendingPlanService.delete(spendingPlanToDelete);
         return "redirect:/seeSpendingPlan";
     }
-    //This will display the spending plan as a piechart
-    private ArrayList<ArrayList<Object>> getPieChartData(User user){
-        return spendingPlanService.getPieChartData(user);
-    }
+
 }
