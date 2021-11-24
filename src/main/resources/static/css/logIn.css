@@ -15,7 +15,7 @@ body {
     width: 320px;
 }
 
-.form-1 {
+.formpass {
     background-color: #15172b;
     border-radius: 20px;
     box-sizing: border-box;
@@ -24,7 +24,7 @@ body {
     width: 320px;
 }
 
-.form-2 {
+.formdel {
     background-color: #15172b;
     border-radius: 20px;
     box-sizing: border-box;
@@ -42,7 +42,7 @@ body {
     margin-top: 30px;
 }
 
-.title-1 {
+.titlepass {
     color: #eee;
     font-family: sans-serif;
     font-size: 22px;
@@ -51,7 +51,7 @@ body {
     margin-right: 30px;
 }
 
-.title-2 {
+.titledel {
     color: #eee;
     font-family: sans-serif;
     font-size: 28px;

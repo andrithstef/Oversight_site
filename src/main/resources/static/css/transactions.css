@@ -132,6 +132,15 @@
     padding: 1em;
 }
 
+.title1 {
+    color: #eee;
+    font-family: sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    margin-top: 30px;
+    margin-right: 30px;
+}
+
 .form-element{
     height: 100%;
     border: 0;

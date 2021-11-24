@@ -27,9 +27,9 @@
     </div>
 </div>
 
-
-<div class="form-2" style="margin: 10vh auto">
-    <div class="title-2" style="padding-left: 60px;">Delete User</div>
+<div class="center-screen">
+<div class="form" style="height: 300px">
+    <div class="title">Delete User</div>
     <form action="#" th:action="@{/deleteUser}" th:object="${user}" method="post">
         <div class="input-container ic1">
             <input type="text" class="input" th:field="*{password}" id="username" placeholder="Password">
@@ -39,6 +39,6 @@
         <input type="submit" class="submit" value="Delete User">
     </form>
 </div>
-
+</div>
 </body>
 </html>
