@@ -10,7 +10,6 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    min-height: 0vh;
 }
 
 
@@ -91,4 +90,81 @@
 
 .specialLink:hover {
     background-color: #303245;
+}
+
+
+/*.ic1 {
+    margin-top: 40px;
+}
+
+.ic2 {
+    margin-top: 30px;
+}*/
+
+.submit {
+    background-color: #08d;
+    border-radius: 12px;
+    border: 0;
+    box-sizing: border-box;
+    color: #eee;
+    cursor: pointer;
+    font-size: 18px;
+    height: 50px;
+    margin-top: 38px;
+// outline: 0;
+    text-align: center;
+    width: 100%;
+}
+
+
+
+.submit:active {
+    background-color: #06b;
+}
+
+.form-container{
+    background-color: #15172b;
+    width: 30%;
+    margin: auto;
+    border-radius: 20px;
+}
+
+.form {
+    display: grid;
+    grid-row-gap: 1em;
+    background-color: #15172b;
+    border-radius: 20px;
+    box-sizing: border-box;
+    height: auto;
+    width: 90%;
+    padding: 1em;
+}
+
+.form-element{
+    height: 100%;
+    border: 0;
+    background-color: #303245;
+    border-radius: 12px;
+    white-space: normal;
+    color: #eee;
+    padding: 1em;
+}
+
+
+
+.form  *:not(.submit){
+    background-color: #303245;
+    border-radius: 12px;
+}
+
+.cut {
+    background-color: #15172b;
+    border-radius: 10px;
+    height: 20px;
+    left: 20px;
+    position: absolute;
+    top: -20px;
+    transform: translateY(0);
+    transition: transform 200ms;
+    width: 76px;
 }
