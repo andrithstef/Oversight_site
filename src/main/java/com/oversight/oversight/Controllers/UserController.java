@@ -90,7 +90,7 @@ public class UserController {
             }
             return "wrongPassword";
         }
-        return "home";
+        return "UsernotExist";
     }
 
     //The homepage
