@@ -70,6 +70,7 @@ public class SpendingPlanController {
             else {
                 spendingPlan.setUser(loggedIn);
                 spendingPlanService.save(spendingPlan);
+                session.setAttribute("seespendingplan", spendingPlan);
                 return "redirect:/seeSpendingPlan";
             }
         }
@@ -77,9 +78,10 @@ public class SpendingPlanController {
     }
     //Deletes the spending plan
     @RequestMapping(value="/deleteSpendingPlan/{id}", method = RequestMethod.GET)
-    public String deleteSpendingPlan(@PathVariable("id") long id, Model model){
+    public String deleteSpendingPlan(@PathVariable("id") long id, HttpSession session){
         SpendingPlan spendingPlanToDelete = spendingPlanService.findByID(id);
         spendingPlanService.delete(spendingPlanToDelete);
+        session.setAttribute("seespendingplan", null);
         return "redirect:/seeSpendingPlan";
     }
 

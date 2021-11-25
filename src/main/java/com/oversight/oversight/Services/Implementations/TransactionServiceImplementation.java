@@ -1,5 +1,6 @@
 package com.oversight.oversight.Services.Implementations;
 
+import com.oversight.oversight.Persistence.Entities.SpendingPlan;
 import com.oversight.oversight.Persistence.Entities.Transaction;
 import com.oversight.oversight.Persistence.Entities.User;
 import com.oversight.oversight.Persistence.Repositories.TransactionRepository;
@@ -206,6 +207,53 @@ public class TransactionServiceImplementation implements TransactionService {
         //Get all transactions
         List<Transaction> transactions = transactionRepository.findAllByUser(user);
 
+        //Add each transaction to the empty list as a pair of month and amount
+        for (Transaction t : transactions){
+            Month m = t.getDate().getMonth();
+            if(t.getDate().getYear() == year){
+                int i = t.getAmount();
+
+                if(map.containsKey(m)){
+                    map.put(m, map.get(m)+i);
+                }
+                else{
+                    map.put(m, i);
+                }
+            }
+        }
+
+
+        Iterator<Map.Entry<Month, Integer>> entrySet = map.entrySet().iterator();
+
+        while(entrySet.hasNext()){
+            Map.Entry<Month, Integer> entry = entrySet.next();
+            temp = new ArrayList<Object>();
+            temp.add(entry.getKey());
+            temp.add(entry.getValue());
+            chartData.add(temp);
+        }
+        return chartData;
+    }
+
+    @Override
+    public ArrayList<ArrayList<Object>> getLineChartDataPlan(User user, SpendingPlan sp) {
+        //Initialize the data, by month and spending
+        ArrayList<ArrayList<Object>> chartData = new ArrayList<ArrayList<Object>>();
+        ArrayList<Object> temp = new ArrayList<Object>();
+        temp.add("month"); // x axis
+        temp.add("spending"); //y axis
+        temp.add("spendingPlan"); //y axis
+        chartData.add(temp); //add to chartData
+
+        //This is the current year
+        int year = LocalDate.now().getYear();
+
+        //Initialize a Treemap to pool all transactions for each month into one value
+        //I use a Treemap because it automatically sorts my keys, i.e. the months
+        TreeMap<Month, Integer> map = new TreeMap<Month, Integer>();
+
+        //Get all transactions
+        List<Transaction> transactions = transactionRepository.findAllByUser(user);
 
         //Add each transaction to the empty list as a pair of month and amount
         for (Transaction t : transactions){
@@ -222,6 +270,8 @@ public class TransactionServiceImplementation implements TransactionService {
             }
         }
 
+        int plan = sp.getTotal();
+
         Iterator<Map.Entry<Month, Integer>> entrySet = map.entrySet().iterator();
 
         while(entrySet.hasNext()){
@@ -229,10 +279,12 @@ public class TransactionServiceImplementation implements TransactionService {
             temp = new ArrayList<Object>();
             temp.add(entry.getKey());
             temp.add(entry.getValue());
+            temp.add(plan);
             chartData.add(temp);
         }
         return chartData;
     }
+
 
     @Override
     public Transaction findByID(long ID) {

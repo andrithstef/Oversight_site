@@ -167,4 +167,11 @@ public class SpendingPlan {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public int getTotal(){
+        return cars_transportation+children+education+fines_fees+food
+                +health_beauty+home+insurance+investments_savings+leisure
+                +shopping_services+uncategorized+vacation_travel;
+    }
+
 }

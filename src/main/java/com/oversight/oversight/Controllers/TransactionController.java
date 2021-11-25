@@ -1,5 +1,6 @@
 package com.oversight.oversight.Controllers;
 
+import com.oversight.oversight.Persistence.Entities.SpendingPlan;
 import com.oversight.oversight.Persistence.Entities.Transaction;
 import com.oversight.oversight.Persistence.Entities.User;
 import com.oversight.oversight.Services.TransactionService;
@@ -40,8 +41,12 @@ public class TransactionController {
         model.addAttribute("transactions", allTransactions);
 
         model.addAttribute("pieChartData", transactionService.getPieChartData(loggedIn));
-        model.addAttribute("lineChartData", transactionService.getLineChartData(loggedIn));
-
+        try{
+            SpendingPlan sp = (SpendingPlan)session.getAttribute("seespendingplan");
+            model.addAttribute("lineChartData", transactionService.getLineChartDataPlan(loggedIn, sp));        }
+        catch (Exception e){
+            model.addAttribute("lineChartData", transactionService.getLineChartData(loggedIn));
+        }
         return "seeTransactions";
     }
 
@@ -57,7 +62,13 @@ public class TransactionController {
         model.addAttribute("transactions", allTransactions);
 
         model.addAttribute("pieChartData", transactionService.getPieChartData(loggedIn));
-        model.addAttribute("lineChartData", transactionService.getLineChartData(loggedIn));
+        try{
+            SpendingPlan sp = (SpendingPlan)session.getAttribute("seespendingplan");
+            model.addAttribute("lineChartData", transactionService.getLineChartDataPlan(loggedIn, sp));
+        }
+        catch (Exception e){
+            model.addAttribute("lineChartData", transactionService.getLineChartData(loggedIn));
+        }
 
         return "seeTransactions";
     }
@@ -74,8 +85,12 @@ public class TransactionController {
         model.addAttribute("transactions", allTransactions);
 
         model.addAttribute("pieChartData", transactionService.getPieChartData(loggedIn));
-        model.addAttribute("lineChartData", transactionService.getLineChartData(loggedIn));
-
+        try{
+            SpendingPlan sp = (SpendingPlan)session.getAttribute("seespendingplan");
+            model.addAttribute("lineChartData", transactionService.getLineChartDataPlan(loggedIn, sp));        }
+        catch (Exception e){
+            model.addAttribute("lineChartData", transactionService.getLineChartData(loggedIn));
+        }
         return "seeTransactions";
     }
 
