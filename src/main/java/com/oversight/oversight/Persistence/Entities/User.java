@@ -28,6 +28,10 @@ public class User {
         this.password = password;
     }
 
+    public AppUser getAppUser(){
+        return new AppUser(this);
+    }
+
     public long getID() {
         return ID;
     }

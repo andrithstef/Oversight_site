@@ -1,6 +1,8 @@
 package com.oversight.oversight.Persistence.Entities;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import java.util.HashMap;
 
 @Entity
 @Table(name="spendingplan")
@@ -23,8 +25,10 @@ public class SpendingPlan {
     private int uncategorized;
     private int vacation_travel;
 
+
     @OneToOne
     private User user;
+
 
     public SpendingPlan() {
     }
@@ -45,7 +49,27 @@ public class SpendingPlan {
         this.shopping_services = shopping_services;
         this.uncategorized = uncategorized;
         this.vacation_travel = vacation_travel;
+
         this.user = user;
+
+    }
+
+    public HashMap<Category, Integer> getMap(){
+        HashMap<Category,  Integer> map = new HashMap<>();
+        map.put(Category.CARS, this.cars_transportation);
+        map.put(Category.CHILDREN, this.children);
+        map.put(Category.HEALTH, this.health_beauty);
+        map.put(Category.FOOD, this.food);
+        map.put(Category.FINES, this.fines_fees);
+        map.put(Category.EDUCATION, this.education);
+        map.put(Category.HOME, this.home);
+        map.put(Category.INSURANCE, this.insurance);
+        map.put(Category.INVESTMENTS, this.investments_savings);
+        map.put(Category.LEISURE, this.leisure);
+        map.put(Category.MISC, this.uncategorized);
+        map.put(Category.SHOPPING, this.shopping_services);
+        map.put(Category.TRAVEL, this.vacation_travel);
+        return map;
     }
 
     public long getID() {

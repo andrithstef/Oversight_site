@@ -3,6 +3,7 @@ package com.oversight.oversight.Services;
 import com.oversight.oversight.Persistence.Entities.User;
 
 public interface UserService {
+
     User save(User user);
     void delete(User user);
 

@@ -222,7 +222,6 @@ public class TransactionServiceImplementation implements TransactionService {
             }
         }
 
-
         Iterator<Map.Entry<Month, Integer>> entrySet = map.entrySet().iterator();
 
         while(entrySet.hasNext()){

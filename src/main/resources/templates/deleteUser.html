@@ -32,7 +32,7 @@
     <div class="title">Delete User</div>
     <form action="#" th:action="@{/deleteUser}" th:object="${user}" method="post">
         <div class="input-container ic1">
-            <input type="text" class="input" th:field="*{password}" id="username" placeholder="Password">
+            <input type="password" class="input" th:field="*{password}" id="username" placeholder="Password">
             <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
             <div class="cut"></div>
         </div>

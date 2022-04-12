@@ -47,6 +47,7 @@ public class SpendingPlanController {
         model.addAttribute("spendingplan", new SpendingPlan());
         return "newSpendingPlan";
     }
+
     //Creates the spending plan
     @RequestMapping(value = "/createSpendingPlan", method = RequestMethod.POST)
     public String createSpendingPlanPOST(@ModelAttribute("spendingplan") SpendingPlan spendingPlan, BindingResult result, HttpSession session){
