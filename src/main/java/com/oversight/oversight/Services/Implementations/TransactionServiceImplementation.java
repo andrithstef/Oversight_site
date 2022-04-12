@@ -1,5 +1,6 @@
 package com.oversight.oversight.Services.Implementations;
 
+import com.oversight.oversight.Persistence.Entities.Category;
 import com.oversight.oversight.Persistence.Entities.SpendingPlan;
 import com.oversight.oversight.Persistence.Entities.Transaction;
 import com.oversight.oversight.Persistence.Entities.User;
@@ -11,9 +12,14 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 public class TransactionServiceImplementation implements TransactionService {
+
+    private final int maxAmount = 10000;
+    private final int minAmount = 500;
+
     private TransactionRepository transactionRepository;
 
     @Autowired
@@ -32,6 +38,17 @@ public class TransactionServiceImplementation implements TransactionService {
     public void delete(Transaction transaction) {
         transactionRepository.delete(transaction);
     }
+
+    @Override
+    public List<Transaction> generateTransactions(User user) {
+        ArrayList<Transaction> transactions = new ArrayList<>();
+        for (int i = 0; i<10; i++){
+            Transaction t = createRandomTransaction(user);
+            transactions.add(t);
+        }
+        return transactions;
+    }
+
 
     @Override
     public List<Transaction> findAllByUser(User user) {
@@ -288,5 +305,24 @@ public class TransactionServiceImplementation implements TransactionService {
     @Override
     public Transaction findByID(long ID) {
         return transactionRepository.findByID(ID);
+    }
+
+
+    private Transaction createRandomTransaction(User user){
+        //random amount
+        int amount = (int)(Math.random()*(maxAmount-minAmount)+minAmount);
+
+        //random category
+        Category category = Category.getRandomCategory();
+
+        //random date between Today and two years ago
+        long max = LocalDate.of(2022, 12, 31).toEpochDay();
+        long min = LocalDate.of(2021, 1, 1).toEpochDay();
+        long randomDay = ThreadLocalRandom.current().nextLong(min, max);
+        LocalDate date = LocalDate.ofEpochDay(randomDay);
+
+        Transaction t = new Transaction(amount, user, category, date);
+        t = transactionRepository.save(t);
+        return t;
     }
 }

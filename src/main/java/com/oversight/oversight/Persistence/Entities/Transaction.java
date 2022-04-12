@@ -31,6 +31,10 @@ public class Transaction {
         this.date = date;
     }
 
+    public String toString(){
+        return user + " // " + amount + " // " + category + " // " + date;
+    }
+
     public long getID() {
         return ID;
     }

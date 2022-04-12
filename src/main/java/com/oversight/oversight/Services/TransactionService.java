@@ -11,6 +11,8 @@ public interface TransactionService {
     Transaction save(Transaction transaction);
     void delete(Transaction transaction);
 
+    List<Transaction> generateTransactions(User user);
+
     List<Transaction> findAllByUser(User user);
     List<Transaction> findAllByUserByCategory(User user);
     List<Transaction> findAllByUserByAmount(User user);

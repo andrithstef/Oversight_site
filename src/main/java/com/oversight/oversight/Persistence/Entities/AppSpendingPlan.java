@@ -1,12 +1,12 @@
 package com.oversight.oversight.Persistence.Entities;
 
-import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import java.util.HashMap;
 
-@Entity
-@Table(name="spendingplan")
-public class SpendingPlan {
+public class AppSpendingPlan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long ID;
@@ -30,28 +30,23 @@ public class SpendingPlan {
     private User user;
 
 
-    public SpendingPlan() {
+    public AppSpendingPlan() {
     }
 
-    public SpendingPlan(int cars_transportation, int children, int education, int fines_fees, int food,
-                        int health_beauty, int home, int insurance, int investments_savings,
-                        int leisure, int shopping_services, int uncategorized, int vacation_travel, User user) {
-        this.cars_transportation = cars_transportation;
-        this.children = children;
-        this.education = education;
-        this.fines_fees = fines_fees;
-        this.food = food;
-        this.health_beauty = health_beauty;
-        this.home = home;
-        this.insurance = insurance;
-        this.investments_savings = investments_savings;
-        this.leisure = leisure;
-        this.shopping_services = shopping_services;
-        this.uncategorized = uncategorized;
-        this.vacation_travel = vacation_travel;
-
-        this.user = user;
-
+    public AppSpendingPlan(SpendingPlan sp) {
+        this.cars_transportation = sp.getCars_transportation();
+        this.children = sp.getChildren();
+        this.education = sp.getEducation();
+        this.fines_fees = sp.getFines_fees();
+        this.food = sp.getFood();
+        this.health_beauty = sp.getHealth_beauty();
+        this.home = sp.getHome();
+        this.insurance = sp.getInsurance();
+        this.investments_savings = sp.getInvestments_savings();
+        this.leisure = sp.getLeisure();
+        this.shopping_services = sp.getShopping_services();
+        this.uncategorized = sp.getUncategorized();
+        this.vacation_travel = sp.getVacation_travel();
     }
 
     public HashMap<Category, Integer> getMap(){
@@ -72,29 +67,6 @@ public class SpendingPlan {
         return map;
     }
 
-    public static SpendingPlan createRandom(User user){
-        int maxAmount = 100000;
-        int minAmount = 4000;
-
-        SpendingPlan sp = new SpendingPlan();
-
-        sp.setCars_transportation((int)(Math.random()*(maxAmount-minAmount)+minAmount));
-        sp.setChildren((int)(Math.random()*(maxAmount-minAmount)+minAmount));
-        sp.setEducation((int)(Math.random()*(maxAmount-minAmount)+minAmount));
-        sp.setFood((int)(Math.random()*(maxAmount-minAmount)+minAmount));
-        sp.setFines_fees((int)(Math.random()*(maxAmount-minAmount)+minAmount));
-        sp.setHealth_beauty((int)(Math.random()*(maxAmount-minAmount)+minAmount));
-        sp.setHome((int)(Math.random()*(maxAmount-minAmount)+minAmount));
-        sp.setInsurance((int)(Math.random()*(maxAmount-minAmount)+minAmount));
-        sp.setInvestments_savings((int)(Math.random()*(maxAmount-minAmount)+minAmount));
-        sp.setLeisure((int)(Math.random()*(maxAmount-minAmount)+minAmount));
-        sp.setShopping_services((int)(Math.random()*(maxAmount-minAmount)+minAmount));
-        sp.setUncategorized((int)(Math.random()*(maxAmount-minAmount)+minAmount));
-        sp.setVacation_travel((int)(Math.random()*(maxAmount-minAmount)+minAmount));
-
-        sp.user = user;
-        return sp;
-    }
 
     public long getID() {
         return ID;
@@ -208,18 +180,9 @@ public class SpendingPlan {
         this.vacation_travel = vacation_travel;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     public int getTotal(){
         return cars_transportation+children+education+fines_fees+food
                 +health_beauty+home+insurance+investments_savings+leisure
                 +shopping_services+uncategorized+vacation_travel;
     }
-
 }

@@ -34,6 +34,12 @@ public class SpendingPlanServiceImplementation implements SpendingPlanService {
     }
 
     @Override
+    public SpendingPlan createSpendingPlan(User user) {
+        SpendingPlan sp = SpendingPlan.createRandom(user);
+        return spendingPlanRepository.save(sp);
+    }
+
+    @Override
     public ArrayList<ArrayList<Object>> getPieChartData(User user) {
 
         //Create dictionary
