@@ -32,7 +32,10 @@ public class UserRestController {
         String password = decodedEmailAndPassword.getSecond();
 
         User exists = userService.findByUsername(userName);
-        return exists.getAppUser();
+        if (exists != null && userService.get_SHA_512(password).equals(exists.getPassword())){
+            return exists.getAppUser();
+        }
+        return null;
     }
 
     //create user
