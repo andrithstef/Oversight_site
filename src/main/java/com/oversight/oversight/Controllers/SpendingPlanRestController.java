@@ -22,8 +22,10 @@ public class SpendingPlanRestController {
         this.spendingPlanService = spendingPlanService;
     }
 
-    @RequestMapping("/getSpendingPlan")
+    @RequestMapping("/getSpendingPlan/{userId}")
     public HashMap<Category, Integer> getSpendingPlan(HttpSession session){
+
+
 
         //Get the logged in user's spending plan
         User loggedIn = (User) session.getAttribute("LoggedInUser");

@@ -1,5 +1,6 @@
 package com.oversight.oversight.Controllers;
 
+import com.google.gson.Gson;
 import com.oversight.oversight.Persistence.Entities.AppUser;
 import com.oversight.oversight.Persistence.Entities.SpendingPlan;
 import com.oversight.oversight.Persistence.Entities.Transaction;
@@ -7,6 +8,7 @@ import com.oversight.oversight.Persistence.Entities.User;
 import com.oversight.oversight.Services.SpendingPlanService;
 import com.oversight.oversight.Services.TransactionService;
 import com.oversight.oversight.Services.UserService;
+import net.bytebuddy.description.method.MethodDescription;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Controller;
@@ -15,6 +17,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.lang.reflect.Type;
 import java.util.Base64;
 import java.util.List;
 
@@ -69,12 +72,52 @@ public class UserRestController {
         return null;
     }
 
-    //create user
-    @RequestMapping("/a")
-    public AppUser a(){
-        User a = new User("Hallo", "heimur");
-        return a.getAppUser();
+    @RequestMapping("/deleteAppUser/{userToken}")
+    public boolean deleteAppUser(@PathVariable(value = "userToken") String userToken){
+        System.out.println("Encoded string is: " + userToken);
+        Pair<String, String> decodedEmailAndPassword = myDecoder(userToken);
+        String userName = decodedEmailAndPassword.getFirst();
+        String password = decodedEmailAndPassword.getSecond();
+
+        User exists = userService.findByUsername(userName);
+        if (exists != null){
+            String hashedPassword = userService.get_SHA_512(password);
+            if (hashedPassword.equals(exists.getPassword())){
+                userService.delete(exists);
+                return true;
+            }
+        }
+        return false;
     }
+
+    @RequestMapping("/changePassword/{userToken}/{passwordToken}")
+    public AppUser changePassword(@PathVariable(value = "userToken") String userToken, @PathVariable(value = "passwordToken") String passwordToken){
+        System.out.println("Encoded string is: " + userToken);
+        Pair<String, String> decodedEmailAndPassword = myDecoder(userToken);
+        String userName = decodedEmailAndPassword.getFirst();
+        String password = decodedEmailAndPassword.getSecond();
+
+        User exists = userService.findByUsername(userName);
+        if (exists != null){
+            String hashedPassword = userService.get_SHA_512(password);
+            if (hashedPassword.equals(exists.getPassword())){
+                Pair<String, String> passwords = myDecoder(passwordToken);
+                String newPassword = passwords.getSecond();
+                exists = userService.changePassword(exists, userService.get_SHA_512(newPassword));
+                return exists.getAppUser();
+            }
+        }
+        return null;
+    }
+
+    @RequestMapping(value = "/testPost", method = RequestMethod.POST)
+    public String testPost(@RequestBody String data){
+        System.out.println(data);
+        User user = User.createUser(data);
+        System.out.println(user);
+        return data;
+    }
+
 
 
 

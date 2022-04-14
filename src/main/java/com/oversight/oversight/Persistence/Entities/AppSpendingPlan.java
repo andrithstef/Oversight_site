@@ -7,8 +7,7 @@ import javax.persistence.OneToOne;
 import java.util.HashMap;
 
 public class AppSpendingPlan {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private long ID;
 
     private int cars_transportation;
@@ -47,6 +46,8 @@ public class AppSpendingPlan {
         this.shopping_services = sp.getShopping_services();
         this.uncategorized = sp.getUncategorized();
         this.vacation_travel = sp.getVacation_travel();
+
+        this.ID = sp.getID();
     }
 
     public HashMap<Category, Integer> getMap(){

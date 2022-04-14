@@ -1,8 +1,13 @@
 package com.oversight.oversight.Persistence.Entities;
 
+import com.google.gson.annotations.SerializedName;
+import com.oversight.oversight.Controllers.TransactionRestController;
+
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.StringTokenizer;
 
 @Entity
 @Table(name="users")
@@ -10,6 +15,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long ID;
+
 
     private String username;
     private String password;
@@ -26,6 +32,20 @@ public class User {
     public User(String username, String password) {
         this.username = username;
         this.password = password;
+    }
+
+    public String toString(){
+        return this.username + " // " + this.password;
+    }
+
+    public static User createUser(String string){
+        HashMap<String ,String> map = TransactionRestController.createMap(string);
+        String userName = map.get("userName");
+        String password = map.get("password");
+        User user = new User();
+        user.setPassword(password);
+        user.setUsername(userName);
+        return user;
     }
 
     public AppUser getAppUser(){

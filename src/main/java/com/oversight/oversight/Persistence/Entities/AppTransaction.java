@@ -6,12 +6,21 @@ public class AppTransaction {
     private int amount;
     private Category category;
     private LocalDate date;
+    private long ID;
 
     public AppTransaction(Transaction t){
         this.amount = t.getAmount();
         this.category = t.getCategory();
         this.date = t.getDate();
-        System.out.println(amount + " " + category);
+        this.ID = t.getID();
+    }
+
+    public long getID() {
+        return ID;
+    }
+
+    public void setID(long ID) {
+        this.ID = ID;
     }
 
     public int getAmount() {

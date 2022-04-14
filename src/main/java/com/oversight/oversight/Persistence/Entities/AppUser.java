@@ -1,12 +1,17 @@
 package com.oversight.oversight.Persistence.Entities;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class AppUser {
 
+    @SerializedName("userName")
     private String userName;
+
+    @SerializedName("password")
     private String password;
     private long ID;
 
@@ -30,7 +35,7 @@ public class AppUser {
 
     public AppUser(){}
 
-    private List<AppTransaction> refactorTransactions(List<Transaction> transactions){
+    public static List<AppTransaction> refactorTransactions(List<Transaction> transactions){
         ArrayList<AppTransaction> t = new ArrayList<>();
         for (Transaction transaction : transactions){
             System.out.println(transaction);
