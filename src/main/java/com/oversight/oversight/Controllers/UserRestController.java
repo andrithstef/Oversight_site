@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.lang.reflect.Type;
 import java.util.Base64;
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -36,31 +37,35 @@ public class UserRestController {
     }
 
 
-    @RequestMapping("/loginUser/{userToken}")
-    public AppUser loginApp(@PathVariable(value = "userToken") String userToken){
-        System.out.println("Encoded string is: " + userToken);
-        Pair<String, String> decodedEmailAndPassword = myDecoder(userToken);
-        String userName = decodedEmailAndPassword.getFirst();
-        String password = decodedEmailAndPassword.getSecond();
+    @RequestMapping("/loginUser")
+    public AppUser loginApp(@RequestBody String data){
+        HashMap<String, String> map = TransactionRestController.createMap(data);
+        String userName = map.get("userName");
+        String password = map.get("password");
 
         User exists = userService.findByUsername(userName);
-        if (exists != null && userService.get_SHA_512(password).equals(exists.getPassword())){
-            return exists.getAppUser();
+        if (exists != null){
+            if (password.equals(exists.getPassword())){
+                return exists.getAppUser();
+            }
+            else{
+                AppUser a = exists.getAppUser();
+                a.setPassword("wrong password");
+                return a;
+            }
         }
         return null;
     }
 
-    @RequestMapping("/createAppUser/{userToken}")
-    public AppUser createAppUser(@PathVariable(value = "userToken") String userToken){
-        System.out.println("Encoded string is: " + userToken);
-        Pair<String, String> decodedEmailAndPassword = myDecoder(userToken);
-        String userName = decodedEmailAndPassword.getFirst();
-        String password = decodedEmailAndPassword.getSecond();
+    @RequestMapping("/createAppUser")
+    public AppUser createAppUser(@RequestBody String data){
+        HashMap<String,String> map = TransactionRestController.createMap(data);
+        String userName = map.get("userName");
+        String password = map.get("password");
 
         User exists = userService.findByUsername(userName);
         if (exists == null){
-            String hashedPassword = userService.get_SHA_512(password);
-            User user = new User(userName, hashedPassword);
+            User user = new User(userName, password);
             exists = userService.save(user);
             List<Transaction> t = transactionService.generateTransactions(exists);
             SpendingPlan sp = spendingPlanService.createSpendingPlan(exists);
@@ -72,17 +77,16 @@ public class UserRestController {
         return null;
     }
 
-    @RequestMapping("/deleteAppUser/{userToken}")
-    public boolean deleteAppUser(@PathVariable(value = "userToken") String userToken){
-        System.out.println("Encoded string is: " + userToken);
-        Pair<String, String> decodedEmailAndPassword = myDecoder(userToken);
-        String userName = decodedEmailAndPassword.getFirst();
-        String password = decodedEmailAndPassword.getSecond();
+    @RequestMapping("/deleteAppUser")
+    public boolean deleteAppUser(@RequestBody String data){
+        HashMap<String, String> map = TransactionRestController.createMap(data);
+        String userName = map.get("userName");
+        String password = map.get("password");
+        String confirmPassword = map.get("confirmPassword");
 
         User exists = userService.findByUsername(userName);
         if (exists != null){
-            String hashedPassword = userService.get_SHA_512(password);
-            if (hashedPassword.equals(exists.getPassword())){
+            if (password.equals(exists.getPassword()) && confirmPassword.equals(exists.getPassword())){
                 userService.delete(exists);
                 return true;
             }
@@ -90,20 +94,17 @@ public class UserRestController {
         return false;
     }
 
-    @RequestMapping("/changePassword/{userToken}/{passwordToken}")
-    public AppUser changePassword(@PathVariable(value = "userToken") String userToken, @PathVariable(value = "passwordToken") String passwordToken){
-        System.out.println("Encoded string is: " + userToken);
-        Pair<String, String> decodedEmailAndPassword = myDecoder(userToken);
-        String userName = decodedEmailAndPassword.getFirst();
-        String password = decodedEmailAndPassword.getSecond();
+    @RequestMapping("/changeAppPassword")
+    public AppUser changePassword(@RequestBody String data){
+        HashMap<String, String> map = TransactionRestController.createMap(data);
+        String userName = map.get("userName");
+        String oldPassword = map.get("oldPassword");
+        String newPassword = map.get("newPassword");
 
         User exists = userService.findByUsername(userName);
         if (exists != null){
-            String hashedPassword = userService.get_SHA_512(password);
-            if (hashedPassword.equals(exists.getPassword())){
-                Pair<String, String> passwords = myDecoder(passwordToken);
-                String newPassword = passwords.getSecond();
-                exists = userService.changePassword(exists, userService.get_SHA_512(newPassword));
+            if (oldPassword.equals(exists.getPassword())){
+                exists = userService.changePassword(exists, newPassword);
                 return exists.getAppUser();
             }
         }

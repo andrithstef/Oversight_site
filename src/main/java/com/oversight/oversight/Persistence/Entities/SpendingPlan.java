@@ -2,7 +2,10 @@ package com.oversight.oversight.Persistence.Entities;
 
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 @Entity
 @Table(name="spendingplan")
@@ -51,7 +54,41 @@ public class SpendingPlan {
         this.vacation_travel = vacation_travel;
 
         this.user = user;
+    }
 
+    public SpendingPlan(int[] cats, User user) {
+        this.cars_transportation = cats[0];
+        this.children = cats[1];
+        this.education = cats[2];
+        this.fines_fees = cats[3];
+        this.food = cats[4];
+        this.health_beauty = cats[5];
+        this.home = cats[6];
+        this.insurance = cats[7];
+        this.investments_savings = cats[8];
+        this.leisure = cats[9];
+        this.shopping_services = cats[10];
+        this.uncategorized = cats[11];
+        this.vacation_travel = cats[12];
+
+        this.user = user;
+
+    }
+
+    public static SpendingPlan createFromMap(HashMap<Category, Integer> map, User user){
+        SpendingPlan sp = new SpendingPlan();
+        ArrayList<Category> cats = Category.getCategories();
+
+        int[] categories = new int[13];
+        int index = 0;
+        for (Category c : cats){
+            int val = 0;
+            if (map.containsKey(c)){
+                val = map.get(c);
+            }
+            categories[index++] = val;
+        }
+        return new SpendingPlan(categories, user);
     }
 
     public HashMap<Category, Integer> getMap(){
@@ -70,6 +107,23 @@ public class SpendingPlan {
         map.put(Category.SHOPPING, this.shopping_services);
         map.put(Category.TRAVEL, this.vacation_travel);
         return map;
+    }
+
+    public HashMap<String, Integer> getMapForApp(){
+        HashMap<Category,  Integer> map = this.getMap();
+        HashMap<String, Integer> newMap = new HashMap<>();
+
+        Iterator m = map.entrySet().iterator();
+
+        while (m.hasNext()){
+            Map.Entry entry = (Map.Entry) m.next();
+            Category c = (Category) entry.getKey();
+            int v = (int)entry.getValue();
+            String cat = c.name();
+            newMap.put(cat, v);
+        }
+        newMap.put("id", (int)this.getID());
+        return newMap;
     }
 
     public static SpendingPlan createRandom(User user){
