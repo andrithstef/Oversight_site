@@ -29,15 +29,27 @@ public class TransactionRestController {
 
     }
 
-    @RequestMapping("/deleteTransaction/{id}")
-    public boolean deleteTransaction(@PathVariable(value = "id") String id){
-        long transactionID = Long.getLong(id);
-        Transaction t = transactionService.findByID(transactionID);
+    @RequestMapping("/deleteTransaction")
+    public List<AppTransaction> deleteTransaction(@RequestBody String data){
+        HashMap<String, String> map = createMap(data);
+        String id = map.get("id");
+        String userName  = map.get("userName");
+        int intId = Integer.parseInt(id);
+        long ID = Integer.toUnsignedLong(intId);
+        System.out.println(ID);
+        Transaction t = transactionService.findByID(ID);
+        System.out.println(t);
         if (t != null){
+            System.out.println("deleting transaction: " + t );
             transactionService.delete(t);
-            return true;
         }
-        return false;
+        User user = userService.findByUsername(userName);
+        List<Transaction> transactions = transactionService.findAllByUser(user);
+        List<AppTransaction> at = new ArrayList<>();
+        for (Transaction transaction : transactions){
+            at.add(new AppTransaction(transaction));
+        }
+        return at;
     }
 
     @RequestMapping("/getTransactions")
