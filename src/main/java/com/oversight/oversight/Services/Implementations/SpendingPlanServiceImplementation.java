@@ -34,7 +34,8 @@ public class SpendingPlanServiceImplementation implements SpendingPlanService {
     }
 
     @Override
-    public SpendingPlan createSpendingPlan(User user) {
+    public SpendingPlan createSpendingPlan(User user, String generate) {
+        if (generate.equals("no")) return null;
         SpendingPlan sp = SpendingPlan.createRandom(user);
         return spendingPlanRepository.save(sp);
     }

@@ -127,8 +127,8 @@ public class SpendingPlan {
     }
 
     public static SpendingPlan createRandom(User user){
-        int maxAmount = 100000;
-        int minAmount = 4000;
+        int maxAmount = 50000;
+        int minAmount = 5000;
 
         SpendingPlan sp = new SpendingPlan();
 

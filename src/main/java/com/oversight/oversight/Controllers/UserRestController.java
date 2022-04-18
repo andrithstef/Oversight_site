@@ -62,13 +62,14 @@ public class UserRestController {
         HashMap<String,String> map = TransactionRestController.createMap(data);
         String userName = map.get("userName");
         String password = map.get("password");
+        String generate = map.get("generate");
 
         User exists = userService.findByUsername(userName);
         if (exists == null){
             User user = new User(userName, password);
             exists = userService.save(user);
-            List<Transaction> t = transactionService.generateTransactions(exists);
-            SpendingPlan sp = spendingPlanService.createSpendingPlan(exists);
+            List<Transaction> t = transactionService.generateTransactions(exists, generate);
+            SpendingPlan sp = spendingPlanService.createSpendingPlan(exists, generate);
             exists.setSpendingPlan(sp);
             exists.setTransactions(t);
             System.out.println(exists.getAppUser());

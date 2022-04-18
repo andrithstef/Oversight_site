@@ -40,9 +40,10 @@ public class TransactionServiceImplementation implements TransactionService {
     }
 
     @Override
-    public List<Transaction> generateTransactions(User user) {
+    public List<Transaction> generateTransactions(User user, String generate) {
         ArrayList<Transaction> transactions = new ArrayList<>();
-        for (int i = 0; i<10; i++){
+        if (generate.equals("no")) return transactions;
+        for (int i = 0; i<50; i++){
             Transaction t = createRandomTransaction(user);
             transactions.add(t);
         }
