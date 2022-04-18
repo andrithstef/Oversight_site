@@ -11,7 +11,7 @@ public interface SpendingPlanService {
 
     SpendingPlan findByUser(User user);
 
-    SpendingPlan createSpendingPlan(User user, String generate);
+    SpendingPlan createSpendingPlan(User user);
 
     ArrayList<ArrayList<Object>> getPieChartData(User user);
 
