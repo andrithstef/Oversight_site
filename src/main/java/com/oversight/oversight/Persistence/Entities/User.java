@@ -1,6 +1,5 @@
 package com.oversight.oversight.Persistence.Entities;
 
-import com.google.gson.annotations.SerializedName;
 import com.oversight.oversight.Controllers.TransactionRestController;
 
 import javax.persistence.*;

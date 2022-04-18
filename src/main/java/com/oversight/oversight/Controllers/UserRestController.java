@@ -1,6 +1,5 @@
 package com.oversight.oversight.Controllers;
 
-import com.google.gson.Gson;
 import com.oversight.oversight.Persistence.Entities.AppUser;
 import com.oversight.oversight.Persistence.Entities.SpendingPlan;
 import com.oversight.oversight.Persistence.Entities.Transaction;

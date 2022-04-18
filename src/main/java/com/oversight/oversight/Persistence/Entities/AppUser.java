@@ -1,6 +1,6 @@
 package com.oversight.oversight.Persistence.Entities;
 
-import com.google.gson.annotations.SerializedName;
+//import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,10 +8,8 @@ import java.util.List;
 
 public class AppUser {
 
-    @SerializedName("userName")
     private String userName;
 
-    @SerializedName("password")
     private String password;
     private long ID;
 
