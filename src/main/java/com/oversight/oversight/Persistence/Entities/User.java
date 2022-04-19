@@ -1,8 +1,10 @@
 package com.oversight.oversight.Persistence.Entities;
 
 import com.oversight.oversight.Controllers.TransactionRestController;
+import org.apache.tomcat.jni.Local;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,6 +21,8 @@ public class User {
     private String username;
     private String password;
 
+    private LocalDate created;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = false)
     private List<Transaction> transactions = new ArrayList<>();
 
@@ -26,6 +30,14 @@ public class User {
     private SpendingPlan spendingPlan;
 
     public User() {
+    }
+
+    public LocalDate getCreated() {
+        return created;
+    }
+
+    public void setCreated(LocalDate created) {
+        this.created = created;
     }
 
     public User(String username, String password) {

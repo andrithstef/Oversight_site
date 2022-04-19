@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.lang.reflect.Type;
+import java.time.LocalDate;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
@@ -65,6 +66,7 @@ public class UserRestController {
         User exists = userService.findByUsername(userName);
         if (exists == null){
             User user = new User(userName, password);
+            user.setCreated(LocalDate.now());
             exists = userService.save(user);
             List<Transaction> t = transactionService.generateTransactions(exists);
             SpendingPlan sp = spendingPlanService.createSpendingPlan(exists);

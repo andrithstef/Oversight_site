@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
 
 @Controller
 public class UserController {
@@ -53,6 +54,7 @@ public class UserController {
         if (exists == null) {
             //the user does not exist
             //save user
+            user.setCreated(LocalDate.now());
             exists = userService.save(user);
 
             //Update model and session

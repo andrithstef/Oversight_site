@@ -13,6 +13,8 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 @Service
 public class TransactionServiceImplementation implements TransactionService {
@@ -77,8 +79,12 @@ public class TransactionServiceImplementation implements TransactionService {
     @Override
     public List<Transaction> generateTransactions(User user) {
         ArrayList<Transaction> transactions = new ArrayList<>();
-        for (int i = 0; i<50; i++){
+        double probOfNegative = 0.1;
+        for (int i = 0; i<100; i++){
             Transaction t = createRandomTransaction(user);
+            if (Math.random()<probOfNegative){
+                t.setAmount(-10000);
+            }
             transactions.add(t);
         }
         return transactions;
@@ -89,7 +95,12 @@ public class TransactionServiceImplementation implements TransactionService {
     public List<Transaction> findAllByUser(User user) {
         //get all transactions
         List<Transaction> all = transactionRepository.findAllByUser(user);
-
+        all = all.stream().filter(new Predicate<Transaction>() {
+            @Override
+            public boolean test(Transaction transaction) {
+                return transaction.getAmount()>=0;
+            }
+        }).collect(Collectors.toList());
 
         //put them in a tree, this sorts them
         //Here we sort by date
@@ -98,16 +109,18 @@ public class TransactionServiceImplementation implements TransactionService {
         ArrayList<Transaction> temp = new ArrayList<Transaction>();
 
         for(Transaction t: all){
-            LocalDate date = t.getDate();
-            if(tree.containsKey(date)){
-                temp = tree.get(date);
-                temp.add(t);
-                tree.put(date, temp);
-            }
-            else{
-                temp = new ArrayList<Transaction>();
-                temp.add(t);
-                tree.put(date, temp);
+            if (t.getAmount()>=0){
+                LocalDate date = t.getDate();
+                if(tree.containsKey(date)){
+                    temp = tree.get(date);
+                    temp.add(t);
+                    tree.put(date, temp);
+                }
+                else{
+                    temp = new ArrayList<Transaction>();
+                    temp.add(t);
+                    tree.put(date, temp);
+                }
             }
         }
 
@@ -131,22 +144,29 @@ public class TransactionServiceImplementation implements TransactionService {
     public List<Transaction> findAllByUserByCategory(User user) {
         //The same as before but here we sort by category
         List<Transaction> all = transactionRepository.findAllByUser(user);
-
+        all = all.stream().filter(new Predicate<Transaction>() {
+            @Override
+            public boolean test(Transaction transaction) {
+                return transaction.getAmount()>=0;
+            }
+        }).collect(Collectors.toList());
         TreeMap<String, ArrayList<Transaction>> tree = new TreeMap<String, ArrayList<Transaction>>();
 
         ArrayList<Transaction> temp = new ArrayList<Transaction>();
 
         for(Transaction t: all){
-            String s = t.getCategory().getDisplayName();
-            if(tree.containsKey(s)){
-                temp = tree.get(s);
-                temp.add(t);
-                tree.put(s, temp);
-            }
-            else{
-                temp = new ArrayList<Transaction>();
-                temp.add(t);
-                tree.put(s, temp);
+            if (t.getAmount()>=0){
+                String s = t.getCategory().getDisplayName();
+                if(tree.containsKey(s)){
+                    temp = tree.get(s);
+                    temp.add(t);
+                    tree.put(s, temp);
+                }
+                else{
+                    temp = new ArrayList<Transaction>();
+                    temp.add(t);
+                    tree.put(s, temp);
+                }
             }
         }
 
@@ -169,22 +189,29 @@ public class TransactionServiceImplementation implements TransactionService {
     public List<Transaction> findAllByUserByAmount(User user) {
         //Same but sort by amount
         List<Transaction> all = transactionRepository.findAllByUser(user);
-
+        all = all.stream().filter(new Predicate<Transaction>() {
+            @Override
+            public boolean test(Transaction transaction) {
+                return transaction.getAmount()>=0;
+            }
+        }).collect(Collectors.toList());
         TreeMap<Integer, ArrayList<Transaction>> tree = new TreeMap<Integer, ArrayList<Transaction>>();
 
         ArrayList<Transaction> temp = new ArrayList<Transaction>();
 
         for(Transaction t: all){
-            int i = t.getAmount();
-            if(tree.containsKey(i)){
-                temp = tree.get(i);
-                temp.add(t);
-                tree.put(i, temp);
-            }
-            else{
-                temp = new ArrayList<Transaction>();
-                temp.add(t);
-                tree.put(i, temp);
+            if (t.getAmount()>=0){
+                int i = t.getAmount();
+                if(tree.containsKey(i)){
+                    temp = tree.get(i);
+                    temp.add(t);
+                    tree.put(i, temp);
+                }
+                else{
+                    temp = new ArrayList<Transaction>();
+                    temp.add(t);
+                    tree.put(i, temp);
+                }
             }
         }
 
@@ -214,6 +241,14 @@ public class TransactionServiceImplementation implements TransactionService {
 
         //get all transactions
         List<Transaction> transactions = transactionRepository.findAllByUser(user);
+
+        transactions = transactions.stream().filter(new Predicate<Transaction>() {
+            @Override
+            public boolean test(Transaction transaction) {
+                return transaction.getAmount()>=0;
+            }
+        }).collect(Collectors.toList());
+
 
         //Add each transaction to the empty list as a pair of category and amount
         for (Transaction t : transactions){
@@ -258,6 +293,13 @@ public class TransactionServiceImplementation implements TransactionService {
 
         //Get all transactions
         List<Transaction> transactions = transactionRepository.findAllByUser(user);
+        transactions = transactions.stream().filter(new Predicate<Transaction>() {
+            @Override
+            public boolean test(Transaction transaction) {
+                return transaction.getAmount()>=0;
+            }
+        }).collect(Collectors.toList());
+
 
         //Add each transaction to the empty list as a pair of month and amount
         for (Transaction t : transactions){
@@ -305,6 +347,13 @@ public class TransactionServiceImplementation implements TransactionService {
 
         //Get all transactions
         List<Transaction> transactions = transactionRepository.findAllByUser(user);
+        transactions = transactions.stream().filter(new Predicate<Transaction>() {
+            @Override
+            public boolean test(Transaction transaction) {
+                return transaction.getAmount()>=0;
+            }
+        }).collect(Collectors.toList());
+
 
         //Add each transaction to the empty list as a pair of month and amount
         for (Transaction t : transactions){
@@ -351,8 +400,8 @@ public class TransactionServiceImplementation implements TransactionService {
         Category category = Category.getRandomCategory();
 
         //random date between Today and two years ago
-        long max = LocalDate.of(2022, 12, 31).toEpochDay();
-        long min = LocalDate.of(2021, 1, 1).toEpochDay();
+        long max = LocalDate.now().toEpochDay();
+        long min = LocalDate.now().minusDays(365).toEpochDay();
         long randomDay = ThreadLocalRandom.current().nextLong(min, max);
         LocalDate date = LocalDate.ofEpochDay(randomDay);
 

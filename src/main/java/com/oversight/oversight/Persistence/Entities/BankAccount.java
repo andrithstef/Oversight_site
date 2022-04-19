@@ -10,7 +10,7 @@ public class BankAccount {
     @GeneratedValue
     private long ID;
 
-    @ManyToOne
+    @OneToOne
     private User user;
     private int balance;
 

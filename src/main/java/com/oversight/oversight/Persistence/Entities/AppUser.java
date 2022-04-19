@@ -2,6 +2,7 @@ package com.oversight.oversight.Persistence.Entities;
 
 //import com.google.gson.annotations.SerializedName;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +13,7 @@ public class AppUser {
 
     private String password;
     private long ID;
+    private LocalDate created;
 
     private List<AppTransaction> transactionList;
     private HashMap<Category, Integer> sp;
@@ -20,7 +22,7 @@ public class AppUser {
         this.userName = user.getUsername();
         this.password = user.getPassword();
         this.ID = user.getID();
-
+        this.created = user.getCreated();
         this.transactionList = refactorTransactions(user.getTransactions());
 
         this.sp = user.getSpendingPlan().getMap();

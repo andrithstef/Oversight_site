@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -56,7 +58,14 @@ public class TransactionRestController {
     public List<AppTransaction> getTransactions(@RequestBody String data){
         User user = User.createUser(data);
         User exists = userService.findByUsername(user.getUsername());
-        return exists.getAppUser().getTransactionList();
+        List<AppTransaction> l = exists.getAppUser().getTransactionList();
+        l = l.stream().filter(new Predicate<AppTransaction>() {
+            @Override
+            public boolean test(AppTransaction transaction) {
+                return transaction.getAmount()>=0;
+            }
+        }).collect(Collectors.toList());
+        return l;
     }
 
     @RequestMapping("/getTransactionsForDays")
@@ -66,35 +75,32 @@ public class TransactionRestController {
         String password = map.get("password");
         String days = map.get("days");
         User user = userService.findByUsername(userName);
-
+        /*
         if (user.getPassword().equals(password)){
             return null;
         }
-
+        */
         return transactionService.findAllByUserByDate(user, Integer.parseInt(days));
     }
 
 
     @RequestMapping("/createTransaction")
     public List<AppTransaction> createTransaction(@RequestBody String data){
-        System.out.println(data);
         HashMap<String, String > map = createMap(data);
-        System.out.println(map);
-        System.out.println("############################");
         try{
-            System.out.println("##################################");
             User user = userService.findByUsername(map.get("userName"));
             Transaction t = new Transaction();
             t.setAmount(Integer.parseInt(map.get("amount")));
             t.setDate(LocalDate.parse(map.get("date")));
             t.setCategory(Category.valueOf(map.get("category")));
             t.setUser(user);
-            System.out.println(t);
             transactionService.save(t);
             List<Transaction> transactions = transactionService.findAllByUser(user);
             ArrayList<AppTransaction> at = new ArrayList<>();
             for (Transaction transaction : transactions){
-                at.add(new AppTransaction(transaction));
+                if (transaction.getAmount()>=0){
+                    at.add(new AppTransaction(transaction));
+                }
             }
             return at;
         }
