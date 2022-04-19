@@ -27,7 +27,42 @@ public class TransactionServiceImplementation implements TransactionService {
         this.transactionRepository = transactionRepository;
     }
 
+    @Override
+    public List<Integer> findAllByUserByDate(User user, int days){
+        List<Transaction> transactions = transactionRepository.findAllByUser(user);
+        LocalDate today = LocalDate.now();
+        LocalDate min = LocalDate.now().minusDays(days);
 
+        TreeMap<LocalDate, Integer> map = new TreeMap<>();
+
+        for (Transaction t: transactions){
+            LocalDate date = t.getDate();
+            if (date.compareTo(min) >= 0 && date.compareTo(today) <= 0){
+                int val = t.getAmount();
+                if (map.containsKey(date)){
+                    val += map.get(date);
+                }
+                map.put(date, val);
+            }
+        }
+
+        int[] values = new int[days];
+        int val = 0;
+        for (int i = 0; i<days; i++){
+            LocalDate date = LocalDate.now().minusDays(i);
+            if (map.containsKey(date)){
+                val += map.get(date);
+            }
+            values[days-i-1] = val;
+        }
+
+        ArrayList<Integer> list = new ArrayList<>();
+
+        for (int i = 0; i<days; i++){
+            list.add(values[i]);
+        }
+        return list;
+    }
 
     @Override
     public Transaction save(Transaction transaction) {

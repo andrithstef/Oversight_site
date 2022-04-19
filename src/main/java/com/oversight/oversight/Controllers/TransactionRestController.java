@@ -59,6 +59,22 @@ public class TransactionRestController {
         return exists.getAppUser().getTransactionList();
     }
 
+    @RequestMapping("/getTransactionsForDays")
+    public List<Integer> getTransactionsForDays(@RequestBody String data){
+        HashMap<String, String> map = createMap(data);
+        String userName = map.get("userName");
+        String password = map.get("password");
+        String days = map.get("days");
+        User user = userService.findByUsername(userName);
+
+        if (user.getPassword().equals(password)){
+            return null;
+        }
+
+        return transactionService.findAllByUserByDate(user, Integer.parseInt(days));
+    }
+
+
     @RequestMapping("/createTransaction")
     public List<AppTransaction> createTransaction(@RequestBody String data){
         System.out.println(data);

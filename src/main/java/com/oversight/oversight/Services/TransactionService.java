@@ -17,6 +17,8 @@ public interface TransactionService {
     List<Transaction> findAllByUserByCategory(User user);
     List<Transaction> findAllByUserByAmount(User user);
 
+    List<Integer> findAllByUserByDate(User user, int days);
+
     ArrayList<ArrayList<Object>> getPieChartData(User user);
     ArrayList<ArrayList<Object>> getLineChartData(User user);
     ArrayList<ArrayList<Object>> getLineChartDataPlan(User user, SpendingPlan sp);
