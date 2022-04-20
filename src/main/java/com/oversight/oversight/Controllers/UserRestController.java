@@ -83,6 +83,7 @@ public class UserRestController {
                 }
             }).collect(Collectors.toList());
             exists.setAmountOfTransactions(t.size());
+            exists = userService.save(exists);
             System.out.println(exists.getAppUser());
             return exists.getAppUser();
         }
