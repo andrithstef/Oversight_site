@@ -24,7 +24,6 @@ public class AppUser {
         this.ID = user.getID();
         this.created = user.getCreated();
         this.transactionList = refactorTransactions(user.getTransactions());
-
         this.sp = user.getSpendingPlan().getMap();
     }
 
@@ -42,6 +41,14 @@ public class AppUser {
             t.add(new AppTransaction(transaction));
         }
         return t;
+    }
+
+    public LocalDate getCreated() {
+        return created;
+    }
+
+    public void setCreated(LocalDate created) {
+        this.created = created;
     }
 
     public List<AppTransaction> getTransactionList() {
