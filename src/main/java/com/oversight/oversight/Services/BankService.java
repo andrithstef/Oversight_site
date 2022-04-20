@@ -12,4 +12,8 @@ public interface BankService {
     BankAccount findByUser(User user);
 
     BankAccount finddByID(long id);
+
+    BankAccount save(BankAccount b);
+
+    BankAccount createBankAccount(User user);
 }

@@ -1,6 +1,7 @@
 package com.oversight.oversight.Controllers;
 
 import com.oversight.oversight.Persistence.Entities.*;
+import com.oversight.oversight.Services.BankService;
 import com.oversight.oversight.Services.TransactionService;
 import com.oversight.oversight.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,13 +23,13 @@ public class TransactionRestController {
 
     private TransactionService transactionService;
     private UserService userService;
+    private BankService bankService;
 
     @Autowired
-    public TransactionRestController(TransactionService transactionService, UserService userService){
+    public TransactionRestController(TransactionService transactionService, UserService userService, BankService bankService){
         this.transactionService = transactionService;
         this.userService = userService;
-
-
+        this.bankService = bankService;
     }
 
     @RequestMapping("/deleteTransaction")
@@ -46,6 +47,9 @@ public class TransactionRestController {
             transactionService.delete(t);
         }
         User user = userService.findByUsername(userName);
+        BankAccount b = bankService.findByUser(user);
+        b.setBalance(b.getBalance()+t.getAmount());
+        bankService.save(b);
         List<Transaction> transactions = transactionService.findAllByUser(user);
         List<AppTransaction> at = new ArrayList<>();
         for (Transaction transaction : transactions){
@@ -62,7 +66,7 @@ public class TransactionRestController {
         l = l.stream().filter(new Predicate<AppTransaction>() {
             @Override
             public boolean test(AppTransaction transaction) {
-                return transaction.getAmount()>=0;
+                return (transaction.getAmount()>=0) && (transaction.getCategory()!= null);
             }
         }).collect(Collectors.toList());
         return l;
@@ -92,13 +96,21 @@ public class TransactionRestController {
             Transaction t = new Transaction();
             t.setAmount(Integer.parseInt(map.get("amount")));
             t.setDate(LocalDate.parse(map.get("date")));
-            t.setCategory(Category.valueOf(map.get("category")));
+            if (map.containsKey("category")){
+                t.setCategory(Category.valueOf(map.get("category")));
+            }
             t.setUser(user);
+            System.out.println(t);
+            BankAccount b = bankService.findByUser(user);
+            System.out.println(b.getBalance());
+            b.setBalance(b.getBalance()-t.getAmount());
+            System.out.println(b.getBalance());
+            bankService.save(b);
             transactionService.save(t);
             List<Transaction> transactions = transactionService.findAllByUser(user);
             ArrayList<AppTransaction> at = new ArrayList<>();
             for (Transaction transaction : transactions){
-                if (transaction.getAmount()>=0){
+                if (transaction.getAmount()>=0 && transaction.getCategory() != null){
                     at.add(new AppTransaction(transaction));
                 }
             }

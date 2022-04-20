@@ -1,9 +1,7 @@
 package com.oversight.oversight.Controllers;
 
-import com.oversight.oversight.Persistence.Entities.AppUser;
-import com.oversight.oversight.Persistence.Entities.SpendingPlan;
-import com.oversight.oversight.Persistence.Entities.Transaction;
-import com.oversight.oversight.Persistence.Entities.User;
+import com.oversight.oversight.Persistence.Entities.*;
+import com.oversight.oversight.Services.BankService;
 import com.oversight.oversight.Services.SpendingPlanService;
 import com.oversight.oversight.Services.TransactionService;
 import com.oversight.oversight.Services.UserService;
@@ -27,13 +25,15 @@ public class UserRestController {
     private UserService userService;
     private TransactionService transactionService;
     private SpendingPlanService spendingPlanService;
+    private BankService bs;
     private static final Base64.Decoder base64Decoder = Base64.getDecoder(); // for decoding server calls
 
     @Autowired
-    public UserRestController(UserService userService, TransactionService transactionService, SpendingPlanService spendingPlanService){
+    public UserRestController(UserService userService, TransactionService transactionService, SpendingPlanService spendingPlanService, BankService bs){
         this.userService = userService;
         this.transactionService = transactionService;
         this.spendingPlanService = spendingPlanService;
+        this.bs = bs;
     }
 
 
@@ -70,8 +70,10 @@ public class UserRestController {
             exists = userService.save(user);
             List<Transaction> t = transactionService.generateTransactions(exists);
             SpendingPlan sp = spendingPlanService.createSpendingPlan(exists);
+            BankAccount bc = bs.createBankAccount(exists);
             exists.setSpendingPlan(sp);
             exists.setTransactions(t);
+            exists.setBankAccount(bc);
             System.out.println(exists.getAppUser());
             return exists.getAppUser();
         }

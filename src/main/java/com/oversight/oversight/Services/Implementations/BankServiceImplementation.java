@@ -40,4 +40,18 @@ public class BankServiceImplementation implements BankService {
     public BankAccount finddByID(long id) {
         return br.findByID(id);
     }
+
+    @Override
+    public BankAccount save(BankAccount b) {
+        return br.save(b);
+    }
+
+    @Override
+    public BankAccount createBankAccount(User user) {
+        BankAccount b = new BankAccount();
+        b.setUser(user);
+        int balance = (int)(90000-Math.random()*70000);
+        b.setBalance(balance);
+        return br.save(b);
+    }
 }

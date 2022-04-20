@@ -29,6 +29,9 @@ public class User {
     @OneToOne(mappedBy = "user", orphanRemoval = true)
     private SpendingPlan spendingPlan;
 
+    @OneToOne(mappedBy = "user", orphanRemoval = true)
+    private BankAccount bankAccount;
+
     public User() {
     }
 
@@ -43,6 +46,14 @@ public class User {
     public User(String username, String password) {
         this.username = username;
         this.password = password;
+    }
+
+    public BankAccount getBankAccount() {
+        return bankAccount;
+    }
+
+    public void setBankAccount(BankAccount bankAccount) {
+        this.bankAccount = bankAccount;
     }
 
     public String toString(){

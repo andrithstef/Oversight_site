@@ -1,6 +1,8 @@
 package com.oversight.oversight.Persistence.Entities;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.lang.Nullable;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -16,6 +18,7 @@ public class Transaction {
     @ManyToOne
     private User user;
 
+    @Nullable
     private Category category;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")

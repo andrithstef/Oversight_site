@@ -12,6 +12,7 @@ public class BankAccount {
 
     @OneToOne
     private User user;
+
     private int balance;
 
 

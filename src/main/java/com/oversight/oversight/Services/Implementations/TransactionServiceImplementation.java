@@ -41,10 +41,11 @@ public class TransactionServiceImplementation implements TransactionService {
             LocalDate date = t.getDate();
             if (date.compareTo(min) >= 0 && date.compareTo(today) <= 0){
                 int val = t.getAmount();
-                if (map.containsKey(date)){
-                    val += map.get(date);
+                LocalDate tempDate = date.minusDays(1);
+                if (map.containsKey(tempDate)){
+                    val += map.get(tempDate);
                 }
-                map.put(date, val);
+                map.put(tempDate, val);
             }
         }
 
@@ -83,7 +84,7 @@ public class TransactionServiceImplementation implements TransactionService {
         for (int i = 0; i<100; i++){
             Transaction t = createRandomTransaction(user);
             if (Math.random()<probOfNegative){
-                t.setAmount(-10000);
+                t.setAmount(-40000);
             }
             transactions.add(t);
         }
@@ -98,7 +99,7 @@ public class TransactionServiceImplementation implements TransactionService {
         all = all.stream().filter(new Predicate<Transaction>() {
             @Override
             public boolean test(Transaction transaction) {
-                return transaction.getAmount()>=0;
+                return (transaction.getAmount()>=0) && (transaction.getCategory()!= null);
             }
         }).collect(Collectors.toList());
 
@@ -147,7 +148,7 @@ public class TransactionServiceImplementation implements TransactionService {
         all = all.stream().filter(new Predicate<Transaction>() {
             @Override
             public boolean test(Transaction transaction) {
-                return transaction.getAmount()>=0;
+                return (transaction.getAmount()>=0) && (transaction.getCategory()!= null);
             }
         }).collect(Collectors.toList());
         TreeMap<String, ArrayList<Transaction>> tree = new TreeMap<String, ArrayList<Transaction>>();
@@ -192,7 +193,7 @@ public class TransactionServiceImplementation implements TransactionService {
         all = all.stream().filter(new Predicate<Transaction>() {
             @Override
             public boolean test(Transaction transaction) {
-                return transaction.getAmount()>=0;
+                return (transaction.getAmount()>=0) && (transaction.getCategory()!= null);
             }
         }).collect(Collectors.toList());
         TreeMap<Integer, ArrayList<Transaction>> tree = new TreeMap<Integer, ArrayList<Transaction>>();
@@ -245,7 +246,7 @@ public class TransactionServiceImplementation implements TransactionService {
         transactions = transactions.stream().filter(new Predicate<Transaction>() {
             @Override
             public boolean test(Transaction transaction) {
-                return transaction.getAmount()>=0;
+                return (transaction.getAmount()>=0) && (transaction.getCategory()!= null);
             }
         }).collect(Collectors.toList());
 
@@ -296,7 +297,7 @@ public class TransactionServiceImplementation implements TransactionService {
         transactions = transactions.stream().filter(new Predicate<Transaction>() {
             @Override
             public boolean test(Transaction transaction) {
-                return transaction.getAmount()>=0;
+                return (transaction.getAmount()>=0) && (transaction.getCategory()!= null);
             }
         }).collect(Collectors.toList());
 
