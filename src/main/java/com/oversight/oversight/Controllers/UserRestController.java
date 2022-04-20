@@ -19,6 +19,8 @@ import java.time.LocalDate;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 @RestController
 public class UserRestController {
@@ -74,6 +76,13 @@ public class UserRestController {
             exists.setSpendingPlan(sp);
             exists.setTransactions(t);
             exists.setBankAccount(bc);
+            t = t.stream().filter(new Predicate<Transaction>() {
+                @Override
+                public boolean test(Transaction transaction) {
+                    return (transaction.getAmount()>=0) && (transaction.getCategory()!= null);
+                }
+            }).collect(Collectors.toList());
+            exists.setAmountOfTransactions(t.size());
             System.out.println(exists.getAppUser());
             return exists.getAppUser();
         }
@@ -121,25 +130,4 @@ public class UserRestController {
         System.out.println(user);
         return data;
     }
-
-
-
-
-    private Pair<String, String> myDecoder(String userToken) {
-        String decodedToken = new String(base64Decoder.decode(userToken));
-        System.out.println("Decoded string is: " + decodedToken);
-        int i;
-        for (i = 0; i < decodedToken.length(); i++) {
-            if (decodedToken.charAt(i) == '%') {
-                break;
-            }
-        }
-        // We now have the index of the end of the email and the start of the password
-        String email = decodedToken.substring(0,i);
-        String password = decodedToken.substring(i+1);
-        System.out.println("here is the decoded email: " + email);
-        System.out.println("here is the decoded password: " + password);
-        return Pair.of(email, password);
-    }
-
 }

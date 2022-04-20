@@ -15,24 +15,27 @@ public class AppUser {
     private long ID;
     private LocalDate created;
 
-    private List<AppTransaction> transactionList;
-    private HashMap<Category, Integer> sp;
+
+    private int amountOfTransactions;
 
     public AppUser(User user){
         this.userName = user.getUsername();
         this.password = user.getPassword();
         this.ID = user.getID();
         this.created = user.getCreated();
-        this.transactionList = refactorTransactions(user.getTransactions());
-        this.sp = user.getSpendingPlan().getMap();
+        this.amountOfTransactions = user.getAmountOfTransactions();
     }
 
-    public String toString(){
-        int l = transactionList.size();
-        return transactionList.toString() + l;
-    }
 
     public AppUser(){}
+
+    public int getAmountOfTransactions() {
+        return amountOfTransactions;
+    }
+
+    public void setAmountOfTransactions(int amountOfTransactions) {
+        this.amountOfTransactions = amountOfTransactions;
+    }
 
     public static List<AppTransaction> refactorTransactions(List<Transaction> transactions){
         ArrayList<AppTransaction> t = new ArrayList<>();
@@ -51,20 +54,8 @@ public class AppUser {
         this.created = created;
     }
 
-    public List<AppTransaction> getTransactionList() {
-        return transactionList;
-    }
-
-    public void setTransactionList(List<AppTransaction> transactionList) {
-        this.transactionList = transactionList;
-    }
-
-    public HashMap<Category, Integer> getSp() {
-        return sp;
-    }
-
-    public void setSp(HashMap<Category, Integer> sp) {
-        this.sp = sp;
+    public String toString(){
+        return userName + " / " + amountOfTransactions + " / " + created;
     }
 
     public String getUserName() {

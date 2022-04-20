@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.time.YearMonth;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Predicate;
@@ -81,7 +82,7 @@ public class TransactionServiceImplementation implements TransactionService {
     public List<Transaction> generateTransactions(User user) {
         ArrayList<Transaction> transactions = new ArrayList<>();
         double probOfNegative = 0.1;
-        for (int i = 0; i<100; i++){
+        for (int i = 0; i<1000; i++){
             Transaction t = createRandomTransaction(user);
             if (Math.random()<probOfNegative){
                 t.setAmount(-40000);
@@ -229,6 +230,20 @@ public class TransactionServiceImplementation implements TransactionService {
         }
 
         return allTransactions;
+    }
+
+    @Override
+    public List<Transaction> findAllByUserByYearMonth(User user, YearMonth month) {
+        List<Transaction> t = transactionRepository.findAllByUser(user);
+        t = t.stream().filter(new Predicate<Transaction>() {
+            @Override
+            public boolean test(Transaction transaction) {
+                int m = transaction.getDate().getMonth().getValue();
+                int y = transaction.getDate().getYear();
+                return (transaction.getAmount()>=0) && (transaction.getCategory()!= null) && YearMonth.of(y,m).equals(month);
+            }
+        }).collect(Collectors.toList());
+        return t;
     }
 
     @Override

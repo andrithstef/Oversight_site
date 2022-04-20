@@ -23,6 +23,16 @@ public class User {
 
     private LocalDate created;
 
+    public int getAmountOfTransactions() {
+        return amountOfTransactions;
+    }
+
+    public void setAmountOfTransactions(int amountOfTransactions) {
+        this.amountOfTransactions = amountOfTransactions;
+    }
+
+    private int amountOfTransactions;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = false)
     private List<Transaction> transactions = new ArrayList<>();
 

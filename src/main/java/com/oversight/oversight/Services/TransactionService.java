@@ -4,6 +4,7 @@ import com.oversight.oversight.Persistence.Entities.SpendingPlan;
 import com.oversight.oversight.Persistence.Entities.Transaction;
 import com.oversight.oversight.Persistence.Entities.User;
 
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +17,7 @@ public interface TransactionService {
     List<Transaction> findAllByUser(User user);
     List<Transaction> findAllByUserByCategory(User user);
     List<Transaction> findAllByUserByAmount(User user);
+    List<Transaction> findAllByUserByYearMonth(User user, YearMonth month);
 
     List<Integer> findAllByUserByDate(User user, int days);
 
