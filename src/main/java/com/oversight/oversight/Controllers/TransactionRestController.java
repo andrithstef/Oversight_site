@@ -53,8 +53,11 @@ public class TransactionRestController {
             transactionService.delete(t);
         }
         User user = userService.findByUsername(userName);
-        user.setAmountOfTransactions(user.getAmountOfTransactions()-1);
-        userService.save(user);
+        if (t.getCategory() != null){
+            user.setAmountOfTransactions(user.getAmountOfTransactions()-1);
+            userService.save(user);
+        }
+
         BankAccount b = bankService.findByUser(user);
         b.setBalance(b.getBalance()+t.getAmount());
         bankService.save(b);
@@ -145,9 +148,9 @@ public class TransactionRestController {
             YearMonth yearMonth = YearMonth.of(y,m);
             if (map.containsKey("category")){
                 t.setCategory(Category.valueOf(map.get("category")));
+                user.setAmountOfTransactions(user.getAmountOfTransactions()+1);
             }
             t.setUser(user);
-            user.setAmountOfTransactions(user.getAmountOfTransactions()+1);
             userService.save(user);
             System.out.println(t);
             BankAccount b = bankService.findByUser(user);
